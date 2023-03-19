@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/productListView"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="237dp"
+            android:layout_height="30dp"
+
+            android:layout_marginLeft="21dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/imageView"
+            android:text="Pizza hải sản Pesto xanh"
+            android:textColor="#000000"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/productPrice"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="237dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/productName"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@+id/imageView"
+            android:text="$25"
+            android:textSize="40dp"
+            android:textColor="@color/black"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageView"
+            app:cardCornerRadius="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pizza1"
+                android:id="@+id/imageViewSrc"
+                />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
