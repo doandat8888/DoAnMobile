@@ -8,6 +8,8 @@ public class Account {
     private String username;
     private String img;
 
+    public Account() {}
+
     public Account(int id, String name, String password, String phoneNumber, String username, String img) {
         this.id = id;
         this.name = name;
@@ -16,8 +18,6 @@ public class Account {
         this.username = username;
         this.img = img;
     }
-
-    public Account() {}
 
     public int getId() {
         return id;

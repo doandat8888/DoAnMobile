@@ -16,13 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doanmobile.R;
 import com.example.doanmobile.model.Product;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ViewHolder> {
 
-    private Product[] productList;
+    private ArrayList<Product> productList;
     private Context context;
 
-    public ProductListAdapter(Product[] productList, Context context) {
+    public ProductListAdapter(ArrayList<Product> productList, Context context) {
         this.productList = productList;
         this.context = context;
     }
@@ -38,9 +41,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Product product = productList[position];
+        final Product product = productList.get(position);
         holder.name.setText(product.getName());
-        holder.img.setImageResource(product.getImg());
+        Picasso.get().load(product.getImg()).resize(200, 300).centerCrop().into(holder.img);
+        holder.price.setText("$" + product.getPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +55,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public int getItemCount() {
-        return productList.length;
+        return productList.size();
     }
 
     public static  class ViewHolder extends RecyclerView.ViewHolder {
