@@ -20,7 +20,7 @@ public class PageActivity extends AppCompatActivity {
     ViewPager viewPager;
     BottomNavigationView bottomNavigationView;
     TextView txtWelcome;
-    String userFullName;
+    String userFullName, userImg;
 
 
     @Override
@@ -32,6 +32,7 @@ public class PageActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         Intent intent = getIntent();
         userFullName = intent.getStringExtra("name");
+        userImg = intent.getStringExtra("img");
     }
 
 
@@ -44,6 +45,7 @@ public class PageActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     bundle.putString("name", userFullName);
+                    bundle.putString("img", userImg);
                     selectedFragment = new HomeFragment();
                     selectedFragment.setArguments(bundle);
                     break;
