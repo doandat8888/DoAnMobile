@@ -1,6 +1,7 @@
 package com.example.doanmobile.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doanmobile.R;
+import com.example.doanmobile.ViewDetailProductActivity;
 import com.example.doanmobile.model.Product;
 import com.squareup.picasso.Picasso;
 
@@ -48,7 +50,12 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Hello product");
+                Intent intent = new Intent(context, ViewDetailProductActivity.class);
+                intent.putExtra("imageSrc", product.getImg());
+                intent.putExtra("name", product.getName());
+                intent.putExtra("description", product.getDescription());
+                intent.putExtra("price", product.getPrice());
+                context.startActivity(intent);
             }
         });
     }
