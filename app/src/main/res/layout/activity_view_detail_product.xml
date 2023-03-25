@@ -89,10 +89,10 @@
         app:layout_constraintVertical_bias="0.965" />
 
     <Button
-        android:id="@+id/btnRaise"
+        android:id="@+id/btnDecrease"
         android:layout_width="51dp"
         android:layout_height="48dp"
-        android:text="+"
+        android:text="-"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.605"
@@ -101,10 +101,10 @@
         app:layout_constraintVertical_bias="0.43" />
 
     <Button
-        android:id="@+id/btnDecrease"
+        android:id="@+id/btnRaise"
         android:layout_width="51dp"
         android:layout_height="48dp"
-        android:text="-"
+        android:text="+"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.891"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +47,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     TextView txtWelcome;
     ImageView userImgView;
+    androidx.appcompat.widget.SearchView searchView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -77,10 +80,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         // Inflate the layout for this fragment
         imageSlider = view.findViewById(R.id.imageSliderHome);
         txtWelcome = view.findViewById(R.id.txtWelcome);
         userImgView = view.findViewById(R.id.imageViewSrc);
+        searchView = view.findViewById(R.id.searchView);
+        searchView.clearFocus();
 
         //Lấy thông tin người dùng
         Bundle bundle = getArguments();
@@ -90,8 +96,6 @@ public class HomeFragment extends Fragment {
             String img = bundle.getString("img");
             Picasso.get().load(img).resize(300, 300).centerCrop().into(userImgView);
         }
-
-
 
         ArrayList<SlideModel> slideModels = new ArrayList<>();
 
@@ -103,17 +107,28 @@ public class HomeFragment extends Fragment {
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
         ArrayList<Product> productList = new ArrayList<>();
-        getProductList(view);
+        getProductList(view, productList);
+
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                getSearchResult(newText, productList);
+                return true;
+            }
+        });
 
         return view;
     }
 
-    public void getProductList(View view) {
+    public void getProductList(View view, ArrayList<Product> productList) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference();
-
         databaseReference.child("Products").addValueEventListener(new ValueEventListener() {
-            ArrayList<Product> productList = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snap : snapshot.getChildren()) {
@@ -124,7 +139,6 @@ public class HomeFragment extends Fragment {
                 ProductListAdapter adapter = new ProductListAdapter(productList, getContext());
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(adapter);
-
             }
 
             @Override
@@ -132,7 +146,20 @@ public class HomeFragment extends Fragment {
 
             }
         });
+    }
 
-
+    public void getSearchResult(String newText, ArrayList<Product> productList){
+        ArrayList<Product> searchResult = new ArrayList<>();
+        for (Product product : productList){
+            if (product.getName().toLowerCase().contains(newText.toLowerCase())){
+                searchResult.add(product);
+            }
+        }
+        if (productList.isEmpty()){
+            return;
+        }else{
+            ProductListAdapter adapter = new ProductListAdapter(searchResult, getContext());
+            recyclerView.setAdapter(adapter);
+        }
     }
 }
