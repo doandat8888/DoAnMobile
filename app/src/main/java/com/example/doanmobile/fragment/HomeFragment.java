@@ -46,7 +46,7 @@ import java.util.Locale;
 public class HomeFragment extends Fragment {
 
     ImageSlider imageSlider;
-    RecyclerView recyclerView;
+    RecyclerView productViewer, categoryViewer;
     TextView txtWelcome;
     ImageView userImgView;
     androidx.appcompat.widget.SearchView searchView;
@@ -110,6 +110,7 @@ public class HomeFragment extends Fragment {
 
         ArrayList<Product> productList = new ArrayList<>();
         getProductList(view, productList);
+        getCategoryList(view);
 
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
@@ -123,7 +124,6 @@ public class HomeFragment extends Fragment {
                 return true;
             }
         });
-        getCategoryList(view);
 
         return view;
     }
@@ -138,10 +138,36 @@ public class HomeFragment extends Fragment {
                     Product product = snap.getValue(Product.class);
                     productList.add(product);
                 }
-                recyclerView = view.findViewById(R.id.recyclerViewProductList);
+                productViewer = view.findViewById(R.id.recyclerViewProductList);
                 ProductListAdapter adapter = new ProductListAdapter(productList, getContext());
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(adapter);
+                productViewer.setLayoutManager(new LinearLayoutManager(getContext()));
+                productViewer.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void getCategoryList(View view) {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+        databaseReference.child("Categories").addValueEventListener(new ValueEventListener() {
+            ArrayList<Category> categoryList = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap : snapshot.getChildren()) {
+                    Category category = snap.getValue(Category.class);
+                    categoryList.add(category);
+                }
+                categoryViewer = view.findViewById(R.id.recyclerViewCategoryList);
+                CategoryListAdapter adapter = new CategoryListAdapter(categoryList, getContext());
+                categoryViewer.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+                categoryViewer.setAdapter(adapter);
+
             }
 
             @Override
@@ -162,34 +188,8 @@ public class HomeFragment extends Fragment {
             return;
         }else{
             ProductListAdapter adapter = new ProductListAdapter(searchResult, getContext());
-            recyclerView.setAdapter(adapter);
+            productViewer.setAdapter(adapter);
         }
-    }
-
-    public void getCategoryList(View view) {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference();
-
-        databaseReference.child("Categories").addValueEventListener(new ValueEventListener() {
-            ArrayList<Category> categoryList = new ArrayList<>();
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot snap : snapshot.getChildren()) {
-                    Category category = snap.getValue(Category.class);
-                    categoryList.add(category);
-                }
-                recyclerView = view.findViewById(R.id.recyclerViewCategoryList);
-                CategoryListAdapter adapter = new CategoryListAdapter(categoryList, getContext());
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                recyclerView.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
 }
