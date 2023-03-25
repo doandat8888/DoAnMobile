@@ -68,6 +68,7 @@ public class ViewDetailProductActivity extends AppCompatActivity {
         });
     }
 
+    //Tính tổng tiền
     public void calcTotalAmount(double price, int quantity) {
         double totalMoney = price * quantity;
         total.setText("$ " + totalMoney);

@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.doanmobile.fragment.HomeFragment;
 import com.example.doanmobile.model.Account;
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     EditText username;
     EditText password;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +67,6 @@ public class LoginActivity extends AppCompatActivity {
                     for(DataSnapshot snap : snapshot.getChildren()) {
                         Account accountLogin = snap.getValue(Account.class);
                         if(accountLogin.getUsername().equals(username) && accountLogin.getPassword().equals(password)) {
-                            System.out.println("Dang nhap thanh cong");
-                            System.out.println("User's fullname: " + accountLogin.getName());
                             //Đưa thông tin người dùng vào trang chủ
                             intent = new Intent(getApplicationContext(), PageActivity.class);
                             intent.putExtra("name", accountLogin.getName());
@@ -87,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }else {
-            System.out.println("Vui long nhap du thong tin");
+            Toast.makeText(context,"Vui long nhap du thong tin", Toast.LENGTH_SHORT).show();
         }
     }
 }

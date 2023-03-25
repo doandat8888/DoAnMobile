@@ -1,7 +1,6 @@
 package com.example.doanmobile.model;
 
 public class Account {
-    private int id;
     private String name;
     private String password;
     private String phoneNumber;
@@ -10,8 +9,7 @@ public class Account {
 
     public Account() {}
 
-    public Account(int id, String name, String password, String phoneNumber, String username, String img) {
-        this.id = id;
+    public Account(String name, String password, String phoneNumber, String username, String img) {
         this.name = name;
         this.password = password;
         this.phoneNumber = phoneNumber;
@@ -19,9 +17,6 @@ public class Account {
         this.img = img;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -43,9 +38,6 @@ public class Account {
         return img;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setName(String name) {
         this.name = name;

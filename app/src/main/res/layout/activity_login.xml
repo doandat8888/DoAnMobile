@@ -114,7 +114,7 @@
             android:layout_width="309dp"
             android:layout_height="64dp"
             android:ems="10"
-
+            android:inputType="textPassword"
             android:text="Password"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
