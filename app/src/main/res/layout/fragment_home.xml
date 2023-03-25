@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
+<<<<<<< Updated upstream
     android:layout_height="match_parent"
+=======
+    android:layout_height="wrap_content"
+>>>>>>> Stashed changes
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -39,7 +43,7 @@
             app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.079" />
+            app:layout_constraintVertical_bias="0.066" />
 
         <ImageView
             android:id="@+id/imageViewSrc"
@@ -68,7 +72,11 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+<<<<<<< Updated upstream
             app:layout_constraintVertical_bias="0.157">
+=======
+            app:layout_constraintVertical_bias="0.142">
+>>>>>>> Stashed changes
 
         </com.denzcoskun.imageslider.ImageSlider>
 
@@ -83,7 +91,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageSliderHome"
-            app:layout_constraintVertical_bias="0.024"
+            app:layout_constraintVertical_bias="0.032"
             app:queryHint="Search pizza...">
 
             <com.denzcoskun.imageslider.ImageSlider
@@ -99,6 +107,7 @@
             </com.denzcoskun.imageslider.ImageSlider>
         </androidx.appcompat.widget.SearchView>
 
+<<<<<<< Updated upstream
         <LinearLayout
             android:id="@+id/categoryContainer"
             android:layout_width="match_parent"
@@ -142,19 +151,39 @@
                 android:layout_marginLeft="16dp" />
         </LinearLayout>
 
+=======
+>>>>>>> Stashed changes
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewProductList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="284dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+<<<<<<< Updated upstream
             app:layout_constraintTop_toBottomOf="@+id/categoryContainer"
             app:layout_constraintVertical_bias="0.342"
             android:nestedScrollingEnabled="false">
+=======
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewCategoryList"
+            app:layout_constraintVertical_bias="1.0">
+
+>>>>>>> Stashed changes
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCategoryList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerViewProductList"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

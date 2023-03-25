@@ -21,8 +21,10 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.doanmobile.PageActivity;
 import com.example.doanmobile.R;
+import com.example.doanmobile.adapter.CategoryListAdapter;
 import com.example.doanmobile.adapter.ProductListAdapter;
 import com.example.doanmobile.model.Account;
+import com.example.doanmobile.model.Category;
 import com.example.doanmobile.model.Product;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -105,6 +107,7 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.slidefour, ScaleTypes.FIT));
 
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+<<<<<<< Updated upstream
 
         ArrayList<Product> productList = new ArrayList<>();
         getProductList(view, productList);
@@ -121,6 +124,10 @@ public class HomeFragment extends Fragment {
                 return true;
             }
         });
+=======
+        getProductList(view);
+        getCategoryList(view);
+>>>>>>> Stashed changes
 
         return view;
     }
@@ -146,6 +153,7 @@ public class HomeFragment extends Fragment {
 
             }
         });
+<<<<<<< Updated upstream
     }
 
     public void getSearchResult(String newText, ArrayList<Product> productList){
@@ -161,5 +169,34 @@ public class HomeFragment extends Fragment {
             ProductListAdapter adapter = new ProductListAdapter(searchResult, getContext());
             recyclerView.setAdapter(adapter);
         }
+=======
+>>>>>>> Stashed changes
     }
+
+    public void getCategoryList(View view) {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+        databaseReference.child("Categories").addValueEventListener(new ValueEventListener() {
+            ArrayList<Category> categoryList = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap : snapshot.getChildren()) {
+                    Category category = snap.getValue(Category.class);
+                    categoryList.add(category);
+                }
+                recyclerView = view.findViewById(R.id.recyclerViewCategoryList);
+                CategoryListAdapter adapter = new CategoryListAdapter(categoryList, getContext());
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+                recyclerView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }

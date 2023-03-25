@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                             intent = new Intent(getApplicationContext(), PageActivity.class);
                             intent.putExtra("name", accountLogin.getName());
                             intent.putExtra("img", accountLogin.getImg());
-
                             startActivity(intent);
                             success = true;
                             break;
