@@ -107,7 +107,6 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.slidefour, ScaleTypes.FIT));
 
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
-<<<<<<< Updated upstream
 
         ArrayList<Product> productList = new ArrayList<>();
         getProductList(view, productList);
@@ -124,10 +123,7 @@ public class HomeFragment extends Fragment {
                 return true;
             }
         });
-=======
-        getProductList(view);
         getCategoryList(view);
->>>>>>> Stashed changes
 
         return view;
     }
@@ -153,7 +149,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-<<<<<<< Updated upstream
     }
 
     public void getSearchResult(String newText, ArrayList<Product> productList){
@@ -169,8 +164,6 @@ public class HomeFragment extends Fragment {
             ProductListAdapter adapter = new ProductListAdapter(searchResult, getContext());
             recyclerView.setAdapter(adapter);
         }
-=======
->>>>>>> Stashed changes
     }
 
     public void getCategoryList(View view) {
