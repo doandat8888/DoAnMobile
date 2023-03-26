@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,13 +44,16 @@ import java.util.Locale;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     ImageSlider imageSlider;
     RecyclerView productViewer, categoryViewer;
     TextView txtWelcome;
     ImageView userImgView;
     androidx.appcompat.widget.SearchView searchView;
+    String type;
+
+    ArrayList<Product> productList = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -82,7 +86,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         // Inflate the layout for this fragment
         imageSlider = view.findViewById(R.id.imageSliderHome);
         txtWelcome = view.findViewById(R.id.txtWelcome);
@@ -90,13 +93,14 @@ public class HomeFragment extends Fragment {
         searchView = view.findViewById(R.id.searchView);
         searchView.clearFocus();
 
-        //Lấy thông tin người dùng
+        //Lấy thông tin người dùng và loại sản phẩm
         Bundle bundle = getArguments();
         if(bundle != null) {
             String userFullname = bundle.getString("name");
             txtWelcome.setText("Hello " + userFullname);
             String img = bundle.getString("img");
             Picasso.get().load(img).resize(300, 300).centerCrop().into(userImgView);
+            type = bundle.getString("type");
         }
 
         ArrayList<SlideModel> slideModels = new ArrayList<>();
@@ -108,7 +112,17 @@ public class HomeFragment extends Fragment {
 
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
-        ArrayList<Product> productList = new ArrayList<>();
+        CategoryListAdapter mAdapter = new CategoryListAdapter(getDataCategoryList(), getContext());
+
+        mAdapter.setOnItemClickListener(new CategoryListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String data) {
+                System.out.println("Category: " + data);
+            }
+        });
+
+
+
         getProductList(view, productList);
         getCategoryList(view);
 
@@ -129,26 +143,51 @@ public class HomeFragment extends Fragment {
     }
 
     public void getProductList(View view, ArrayList<Product> productList) {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference();
-        databaseReference.child("Products").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot snap : snapshot.getChildren()) {
-                    Product product = snap.getValue(Product.class);
-                    productList.add(product);
+//        if(type != "") {
+//            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//            DatabaseReference databaseReference = firebaseDatabase.getReference();
+//            databaseReference.child("Products").addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    for(DataSnapshot snap : snapshot.getChildren()) {
+//                        Product product = snap.getValue(Product.class);
+//                        if(product.getType() == type) {
+//                            productList.add(product);
+//                        }
+//                    }
+//                    productViewer = view.findViewById(R.id.recyclerViewProductList);
+//                    ProductListAdapter adapter = new ProductListAdapter(productList, getContext());
+//                    productViewer.setLayoutManager(new LinearLayoutManager(getContext()));
+//                    productViewer.setAdapter(adapter);
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//        }else {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference databaseReference = firebaseDatabase.getReference();
+            databaseReference.child("Products").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot snap : snapshot.getChildren()) {
+                        Product product = snap.getValue(Product.class);
+                        productList.add(product);
+                    }
+                    productViewer = view.findViewById(R.id.recyclerViewProductList);
+                    ProductListAdapter adapter = new ProductListAdapter(productList, getContext());
+                    productViewer.setLayoutManager(new LinearLayoutManager(getContext()));
+                    productViewer.setAdapter(adapter);
                 }
-                productViewer = view.findViewById(R.id.recyclerViewProductList);
-                ProductListAdapter adapter = new ProductListAdapter(productList, getContext());
-                productViewer.setLayoutManager(new LinearLayoutManager(getContext()));
-                productViewer.setAdapter(adapter);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        //}
     }
 
     public void getCategoryList(View view) {
@@ -177,6 +216,28 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    public ArrayList<Category> getDataCategoryList() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+        ArrayList<Category> categoryList = new ArrayList<>();
+        databaseReference.child("Categories").addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap : snapshot.getChildren()) {
+                    Category category = snap.getValue(Category.class);
+                    categoryList.add(category);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return categoryList;
+    }
+
     public void getSearchResult(String newText, ArrayList<Product> productList){
         ArrayList<Product> searchResult = new ArrayList<>();
         for (Product product : productList){
@@ -192,4 +253,9 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    @NonNull
+    @Override
+    public CreationExtras getDefaultViewModelCreationExtras() {
+        return super.getDefaultViewModelCreationExtras();
+    }
 }
