@@ -25,22 +25,21 @@ import java.util.ArrayList;
 
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> {
 
-    public interface OnItemClickListener {
-        void onItemClick(String data);
-    }
+    ArrayList<Product> productList = new ArrayList<>();
 
-    private OnItemClickListener mListener;
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
-    }
 
     private ArrayList<Category> categoryList;
     private Context context;
 
-    public CategoryListAdapter(ArrayList<Category> categoryList, Context context) {
+    private RecyclerView productViewer;
+    private View view;
+
+    public CategoryListAdapter(View view, RecyclerView productViewer, ArrayList<Category> categoryList, Context context) {
         this.categoryList = categoryList;
         this.context = context;
+        this.productViewer = productViewer;
+        this.view = view;
     }
 
 
@@ -49,8 +48,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     public CategoryListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem = layoutInflater.inflate(R.layout.category_list, parent, false);
-        CategoryListAdapter.ViewHolder viewHolder = new CategoryListAdapter.ViewHolder(listItem, mListener);
-        viewHolder = new ViewHolder(listItem, mListener);
+        CategoryListAdapter.ViewHolder viewHolder = new CategoryListAdapter.ViewHolder(listItem);
+        viewHolder = new ViewHolder(listItem);
         return viewHolder;
     }
 
@@ -62,10 +61,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("mListener: " + mListener);
-                if(mListener != null) {
-                    mListener.onItemClick(category.getName());
-                }
+                HomeFragment homeFragment = new HomeFragment();
+                homeFragment.getProductList(view, productViewer, productList, category.getName());
             }
         });
     }
@@ -81,11 +78,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         public CardView categoryListView;
         public ImageView img;
 
-        private OnItemClickListener listener;
 
-        public ViewHolder(@NonNull View itemView, OnItemClickListener listener) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.listener = listener;
             name = itemView.findViewById(R.id.categoryTxt);
             categoryListView = itemView.findViewById(R.id.categoryListView);
             img = itemView.findViewById(R.id.categoryImg);
