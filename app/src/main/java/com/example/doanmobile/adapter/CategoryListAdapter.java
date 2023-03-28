@@ -62,7 +62,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             @Override
             public void onClick(View v) {
                 HomeFragment homeFragment = new HomeFragment();
-                homeFragment.getProductList(view, productViewer, productList, category.getName());
+                System.out.println("Context category list: " + context);
+                //homeFragment.getProductList(view, productViewer, productList, category.getName());
+                homeFragment.getProductByCategory(view, productViewer, productList, category.getName(), context);
             }
         });
     }

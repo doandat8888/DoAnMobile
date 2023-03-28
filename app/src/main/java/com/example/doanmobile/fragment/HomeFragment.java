@@ -1,5 +1,6 @@
 package com.example.doanmobile.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment{
     ImageView userImgView;
     androidx.appcompat.widget.SearchView searchView;
     String type;
+    Context context;
 
     ArrayList<Product> productList = new ArrayList<>();
 
@@ -59,7 +61,7 @@ public class HomeFragment extends Fragment{
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(String fullName) {
+    public static HomeFragment newInstance(String fullName, Context context) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putString("name", fullName);
@@ -138,54 +140,36 @@ public class HomeFragment extends Fragment{
                 return true;
             }
         });
-
         return view;
     }
 
     public void getProductList(View view, RecyclerView productRecyclerView, ArrayList<Product> productList, String typeProduct) {
+
         ArrayList<Product> productByCategoryList = new ArrayList<>();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference();
-        if(typeProduct != "") { //Nếu có type thì lấy product theo type
-            System.out.println("Type product get: " + typeProduct);
-            databaseReference.child("Products").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot snap : snapshot.getChildren()) {
-                        Product product = snap.getValue(Product.class);
-                        if(product.getType().equals(typeProduct)) {
-                            productByCategoryList.add(product);
-                        }
-                    }
-                    ProductListAdapter adapter = new ProductListAdapter(productByCategoryList, getContext());
-                    productRecyclerView.setAdapter(adapter);
+        context = getContext();
+        databaseReference.child("Products").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap : snapshot.getChildren()) {
+                    Product product = snap.getValue(Product.class);
+                    productList.add(product);
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }else {
-            databaseReference.child("Products").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot snap : snapshot.getChildren()) {
-                        Product product = snap.getValue(Product.class);
-                        productList.add(product);
-                    }
+                if(context != null) {
                     productViewer = view.findViewById(R.id.recyclerViewProductList);
                     ProductListAdapter adapter = new ProductListAdapter(productList, getContext());
-                    productViewer.setLayoutManager(new LinearLayoutManager(getContext()));
+                    productViewer.setLayoutManager(new LinearLayoutManager(context));
                     productViewer.setAdapter(adapter);
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            }
 
-                }
-            });
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void getCategoryList(View view) {
@@ -201,9 +185,35 @@ public class HomeFragment extends Fragment{
                     categoryList.add(category);
                 }
                 categoryViewer = view.findViewById(R.id.recyclerViewCategoryList);
-                CategoryListAdapter adapter = new CategoryListAdapter(view, productViewer, categoryList, getContext());
+                CategoryListAdapter adapter = new CategoryListAdapter(view, productViewer, categoryList, context);
                 categoryViewer.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
                 categoryViewer.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void getProductByCategory(View view, RecyclerView productRecyclerView, ArrayList<Product> productList, String typeProduct, Context context) {
+        ArrayList<Product> productByCategoryList = new ArrayList<>();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+        databaseReference.child("Products").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap : snapshot.getChildren()) {
+                    Product product = snap.getValue(Product.class);
+                    if(product.getType().equals(typeProduct)) {
+                        productByCategoryList.add(product);
+                    }
+                }
+                ProductListAdapter adapter = new ProductListAdapter(productByCategoryList, context);
+                productRecyclerView.setAdapter(adapter);
 
             }
 
