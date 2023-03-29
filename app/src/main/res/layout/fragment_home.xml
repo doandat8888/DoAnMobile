@@ -23,7 +23,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.107"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.018" />
@@ -38,8 +38,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.066" />
+            app:layout_constraintTop_toBottomOf="@+id/txtWelcome"
+            app:layout_constraintVertical_bias="0.01" />
 
         <ImageView
             android:id="@+id/imageViewSrc"
@@ -68,8 +68,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.134">
+            app:layout_constraintTop_toBottomOf="@id/imageViewSrc"
+            app:layout_constraintVertical_bias="0.02">
 
         </com.denzcoskun.imageslider.ImageSlider>
 
@@ -84,7 +84,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageSliderHome"
-            app:layout_constraintVertical_bias="0.017"
+            app:layout_constraintVertical_bias="0.02"
             app:queryHint="Search pizza...">
 
             <com.denzcoskun.imageslider.ImageSlider
@@ -113,12 +113,14 @@
             android:id="@+id/recyclerViewProductList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerViewCategoryList"
             app:layout_constraintVertical_bias="0.507" />
+        <!--Đừng có bỏ cái nestedScrolling ko thì cái kéo xuống nó kỳ lắm-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
