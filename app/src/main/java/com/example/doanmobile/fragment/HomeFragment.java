@@ -114,16 +114,6 @@ public class HomeFragment extends Fragment{
 
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
-//        CategoryListAdapter mAdapter = new CategoryListAdapter(getDataCategoryList(), getContext());
-//
-//        mAdapter.setOnItemClickListener(new CategoryListAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(String data) {
-//                System.out.println("Category: " + data);
-//            }
-//        });
-
-
 
         getProductList(view, productViewer, productList, "");
         getCategoryList(view);

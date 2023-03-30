@@ -14,13 +14,14 @@ import com.example.doanmobile.fragment.CartFragment;
 import com.example.doanmobile.fragment.HomeFragment;
 import com.example.doanmobile.fragment.LikeFragment;
 import com.example.doanmobile.fragment.NotificationFragment;
+import com.example.doanmobile.fragment.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class PageActivity extends AppCompatActivity {
     ViewPager viewPager;
     BottomNavigationView bottomNavigationView;
     TextView txtWelcome;
-    String userFullName, userImg;
+    String userFullName, userImg, phoneNumber;
 
 
     @Override
@@ -33,6 +34,7 @@ public class PageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userFullName = intent.getStringExtra("name");
         userImg = intent.getStringExtra("img");
+        phoneNumber = intent.getStringExtra("phoneNumber");
     }
 
 
@@ -57,6 +59,13 @@ public class PageActivity extends AppCompatActivity {
                     break;
                 case R.id.notification:
                     selectedFragment = new NotificationFragment();
+                    break;
+                case R.id.user:
+                    bundle.putString("name", userFullName);
+                    bundle.putString("img", userImg);
+                    bundle.putString("phoneNumber", phoneNumber);
+                    selectedFragment = new UserFragment();
+                    selectedFragment.setArguments(bundle);
                     break;
             }
 

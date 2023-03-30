@@ -20,4 +20,9 @@
         android:icon="@drawable/bellicon"
         android:title="Notifications"
         />
+    <item
+        android:id="@+id/user"
+        android:icon="@drawable/bellicon"
+        android:title="User"
+        />
 </menu>
