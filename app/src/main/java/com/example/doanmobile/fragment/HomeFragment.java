@@ -198,7 +198,8 @@ public class HomeFragment extends Fragment{
         });
     }
 
-    public void getProductByCategory(View view, RecyclerView productRecyclerView, ArrayList<Product> productList, String typeProduct, Context context) {
+    public void getProductByCategory(View view, RecyclerView productRecyclerView, ArrayList<Product> productList,
+                                     String typeProduct, Context context) {
         ArrayList<Product> productByCategoryList = new ArrayList<>();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference();
