@@ -21,7 +21,8 @@ public class PageActivity extends AppCompatActivity {
     ViewPager viewPager;
     BottomNavigationView bottomNavigationView;
     TextView txtWelcome;
-    String userFullName, userImg, phoneNumber;
+    String userFullName, userImg, phoneNumber, keyUser;
+
 
 
     @Override
@@ -35,6 +36,7 @@ public class PageActivity extends AppCompatActivity {
         userFullName = intent.getStringExtra("name");
         userImg = intent.getStringExtra("img");
         phoneNumber = intent.getStringExtra("phoneNumber");
+        keyUser = intent.getStringExtra("key");
     }
 
 
@@ -64,6 +66,7 @@ public class PageActivity extends AppCompatActivity {
                     bundle.putString("name", userFullName);
                     bundle.putString("img", userImg);
                     bundle.putString("phoneNumber", phoneNumber);
+                    bundle.putString("key", keyUser);
                     selectedFragment = new UserFragment();
                     selectedFragment.setArguments(bundle);
                     break;

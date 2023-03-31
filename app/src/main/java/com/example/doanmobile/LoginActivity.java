@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     boolean success = false;
                     for(DataSnapshot snap : snapshot.getChildren()) {
+
                         Account accountLogin = snap.getValue(Account.class);
                         if(accountLogin.getUsername().equals(username) && accountLogin.getPassword().equals(password)) {
                             //Đưa thông tin người dùng vào trang chủ
@@ -72,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("name", accountLogin.getName());
                             intent.putExtra("img", accountLogin.getImg());
                             intent.putExtra("phoneNumber", accountLogin.getPhoneNumber());
+                            intent.putExtra("key", snap.getKey());
                             startActivity(intent);
                             success = true;
                             break;
