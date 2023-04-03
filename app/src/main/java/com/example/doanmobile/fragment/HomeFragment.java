@@ -199,9 +199,14 @@ public class HomeFragment extends Fragment{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snap : snapshot.getChildren()) {
                     Product product = snap.getValue(Product.class);
-                    if(product.getType().equals(typeProduct)) {
+                    if(typeProduct.equals("All food")) {
                         productByCategoryList.add(product);
+                    }else {
+                        if(product.getType().equals(typeProduct)) {
+                            productByCategoryList.add(product);
+                        }
                     }
+
                 }
                 ProductListAdapter adapter = new ProductListAdapter(productByCategoryList, context);
                 productRecyclerView.setAdapter(adapter);

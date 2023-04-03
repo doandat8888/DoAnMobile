@@ -119,7 +119,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerViewCategoryList"
-            app:layout_constraintVertical_bias="0.507" />
+            app:layout_constraintVertical_bias="0.0" />
         <!--Đừng có bỏ cái nestedScrolling ko thì cái kéo xuống nó kỳ lắm-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
