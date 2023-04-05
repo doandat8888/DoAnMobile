@@ -99,10 +99,13 @@ public class HomeFragment extends Fragment{
         Bundle bundle = getArguments();
         if(bundle != null) {
             String userFullname = bundle.getString("name");
-            txtWelcome.setText("Hello " + userFullname);
-            String img = bundle.getString("img");
-            Picasso.get().load(img).resize(300, 300).centerCrop().into(userImgView);
-            type = bundle.getString("type");
+            if(userFullname != "") {
+                txtWelcome.setText("Hello " + userFullname);
+                String img = bundle.getString("img");
+                Picasso.get().load(img).resize(300, 300).centerCrop().into(userImgView);
+                type = bundle.getString("type");
+            }
+
         }
 
         ArrayList<SlideModel> slideModels = new ArrayList<>();

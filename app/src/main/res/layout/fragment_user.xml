@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".fragment.HomeFragment">
 
+    <ImageView
+        android:id="@+id/background_user"
+        android:layout_width="426dp"
+        android:layout_height="157dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.304"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:src="@drawable/background_user" />
+
 
     <ImageView
         android:id="@+id/userImg"
@@ -16,7 +28,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.149"
+        app:layout_constraintVertical_bias="0.139"
         tools:src="@tools:sample/avatars" />
 
     <EditText
@@ -55,4 +67,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.796" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

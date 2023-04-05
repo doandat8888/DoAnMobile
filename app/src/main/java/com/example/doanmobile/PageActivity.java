@@ -37,6 +37,12 @@ public class PageActivity extends AppCompatActivity {
         userImg = intent.getStringExtra("img");
         phoneNumber = intent.getStringExtra("phoneNumber");
         keyUser = intent.getStringExtra("key");
+        Bundle bundle = new Bundle();
+        Fragment selectedFragment = new Fragment();
+        bundle.putString("name", userFullName);
+        bundle.putString("img", userImg);
+        selectedFragment = new HomeFragment();
+        selectedFragment.setArguments(bundle);
     }
 
 
@@ -70,6 +76,7 @@ public class PageActivity extends AppCompatActivity {
                     selectedFragment = new UserFragment();
                     selectedFragment.setArguments(bundle);
                     break;
+
             }
 
             getSupportFragmentManager().beginTransaction().replace(R.id.viewPager, selectedFragment).commit();

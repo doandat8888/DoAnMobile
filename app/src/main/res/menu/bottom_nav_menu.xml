@@ -22,7 +22,7 @@
         />
     <item
         android:id="@+id/user"
-        android:icon="@drawable/bellicon"
+        android:icon="@drawable/usericon"
         android:title="User"
         />
 </menu>
