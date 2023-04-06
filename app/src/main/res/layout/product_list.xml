@@ -34,7 +34,7 @@
             android:layout_toRightOf="@+id/imageView"
             android:text="$25"
             android:textSize="40dp"
-            android:textColor="@color/black"
+            android:textColor="@color/main"
             />
 
         <androidx.cardview.widget.CardView

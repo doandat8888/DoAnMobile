@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/background_user"
-        android:layout_width="426dp"
+        android:layout_width="match_parent"
         android:layout_height="157dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,20 +16,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:src="@drawable/background_user" />
+        android:src="@drawable/greenbackground" />
 
-
-    <ImageView
-        android:id="@+id/userImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.139"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintVertical_bias="0.142"
+        app:cardCornerRadius="60dp"
+        >
+
+        <ImageView
+            android:id="@+id/userImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.142"
+            tools:src="@tools:sample/avatars" />
+    </androidx.cardview.widget.CardView>
+
+
 
     <EditText
         android:id="@+id/editTextPhoneNumber"
@@ -42,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.595" />
+        app:layout_constraintVertical_bias="0.473" />
 
     <EditText
         android:id="@+id/editTextFullname"
@@ -55,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
+        app:layout_constraintVertical_bias="0.332" />
 
     <Button
         android:id="@+id/btnUpdateInfo"
@@ -66,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.796" />
+        app:layout_constraintVertical_bias="0.644" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
