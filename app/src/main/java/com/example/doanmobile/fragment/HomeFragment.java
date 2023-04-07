@@ -21,6 +21,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.doanmobile.R;
 import com.example.doanmobile.adapter.CategoryListAdapter;
 import com.example.doanmobile.adapter.ProductListAdapter;
+import com.example.doanmobile.customLayoutManager.SpanningLinearLayoutManager;
 import com.example.doanmobile.model.Category;
 import com.example.doanmobile.model.Product;
 import com.google.firebase.database.DataSnapshot;
@@ -171,7 +172,7 @@ public class HomeFragment extends Fragment{
                 }
                 categoryViewer = view.findViewById(R.id.recyclerViewCategoryList);
                 CategoryListAdapter adapter = new CategoryListAdapter(view, productViewer, categoryList, context);
-                categoryViewer.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+                categoryViewer.setLayoutManager(new SpanningLinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
                 categoryViewer.setAdapter(adapter);
 
             }

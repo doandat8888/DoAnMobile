@@ -15,14 +15,10 @@
 
         <ImageView
             android:id="@+id/categoryImg"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.003"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.003"
+            android:layout_width="75dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
             app:srcCompat="@drawable/hamburger" />
 
         <TextView
@@ -30,12 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hamburger"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.047"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.146" />
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
     </LinearLayout>
 
 
