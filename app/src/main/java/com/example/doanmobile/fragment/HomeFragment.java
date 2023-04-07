@@ -1,14 +1,11 @@
 package com.example.doanmobile.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.viewmodel.CreationExtras;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,11 +18,9 @@ import android.widget.TextView;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.doanmobile.PageActivity;
 import com.example.doanmobile.R;
 import com.example.doanmobile.adapter.CategoryListAdapter;
 import com.example.doanmobile.adapter.ProductListAdapter;
-import com.example.doanmobile.model.Account;
 import com.example.doanmobile.model.Category;
 import com.example.doanmobile.model.Product;
 import com.google.firebase.database.DataSnapshot;
@@ -35,10 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
