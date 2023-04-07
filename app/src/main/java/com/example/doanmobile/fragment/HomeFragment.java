@@ -70,11 +70,6 @@ public class HomeFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        Bundle bundle = getArguments();
-        if(bundle != null) {
-            String userFullname = bundle.getString("name");
-            txtWelcome.setText("Hello " + userFullname);
-        }
     }
 
     @Override
@@ -87,19 +82,6 @@ public class HomeFragment extends Fragment{
         userImgView = view.findViewById(R.id.imageViewSrc);
         searchView = view.findViewById(R.id.searchView);
         searchView.clearFocus();
-
-        //Lấy thông tin người dùng và loại sản phẩm
-        Bundle bundle = getArguments();
-        if(bundle != null) {
-            String userFullname = bundle.getString("name");
-            if(userFullname != "") {
-                txtWelcome.setText("Hello " + userFullname);
-                String img = bundle.getString("img");
-                Picasso.get().load(img).resize(300, 300).centerCrop().into(userImgView);
-                type = bundle.getString("type");
-            }
-
-        }
 
         ArrayList<SlideModel> slideModels = new ArrayList<>();
 
