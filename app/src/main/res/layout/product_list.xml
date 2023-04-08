@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/productName"
             android:layout_width="237dp"
@@ -25,35 +26,44 @@
         <TextView
             android:id="@+id/productPrice"
             style="@style/Widget.AppCompat.TextView"
-            android:layout_width="237dp"
-            android:layout_height="60dp"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/productName"
             android:layout_marginLeft="21dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="16dp"
             android:layout_toRightOf="@+id/imageView"
             android:text="$25"
-            android:textSize="40dp"
             android:textColor="@color/main"
-            />
+            android:textSize="40dp" />
+
+        <ImageView
+            android:id="@+id/addBtn"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/productName"
+            android:layout_marginStart="115dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@+id/productPrice"
+            android:src="@drawable/ic_add" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/imageView"
-            app:cardCornerRadius="60dp"
-            android:layout_marginTop="16dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            >
+            app:cardCornerRadius="60dp">
+
             <ImageView
+                android:id="@+id/imageViewSrc"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/pizza1"
-                android:id="@+id/imageViewSrc"
-                />
+                android:src="@drawable/pizza1" />
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
-
 </RelativeLayout>

@@ -2,60 +2,60 @@ package com.example.doanmobile.model;
 
 public class Cart {
     private String id;
-    private String name;
     private String img;
-    private String description;
+    private String name;
     private String price;
-    private String quantity;
+    private int quantity;
+
+    public Cart() {
+    }
+
+    public Cart(String id, String img, String name, String price, int quantity) {
+        this.id = id;
+        this.img = img;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
     public String getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public String getQuantity() {
-        return quantity;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getImg() {
+        return img;
     }
 
     public void setImg(String img) {
         this.img = img;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPrice() {
+        return price;
     }
 
     public void setPrice(String price) {
         this.price = price;
     }
 
-    public void setQuantity(String quantity) {
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public Cart() {
-    }
 }
