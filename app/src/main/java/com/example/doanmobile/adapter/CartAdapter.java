@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.doanmobile.R;
 import com.example.doanmobile.fragment.CartFragment;
+import com.example.doanmobile.fragment.HomeFragment;
 import com.example.doanmobile.model.Cart;
 import com.squareup.picasso.Picasso;
 
@@ -88,13 +89,13 @@ public class CartAdapter extends BaseAdapter {
                 } else {
                     quantityNew = Integer.parseInt(finalViewHolder.editTxtQuantity.getText().toString()) + 1;
                 }
-                int quantityCurrent = CartFragment.arrayCart.get(position).getQuantity();
-                String price = CartFragment.arrayCart.get(position).getPrice();
-                CartFragment.arrayCart.get(position).setQuantity(quantityNew);
+                int quantityCurrent = HomeFragment.arrayCart.get(position).getQuantity();
+                String price = HomeFragment.arrayCart.get(position).getPrice();
+                HomeFragment.arrayCart.get(position).setQuantity(quantityNew);
                 Long newPrice = (Long.parseLong(price) * quantityNew) / quantityCurrent;
-                CartFragment.arrayCart.get(position).setPrice(String.valueOf(newPrice));
-                finalViewHolder.editTxtQuantity.setText(CartFragment.arrayCart.get(position).getQuantity() + "");
-                finalViewHolder.txtCartItemPrice.setText(CartFragment.arrayCart.get(position).getPrice() + "đ");
+                HomeFragment.arrayCart.get(position).setPrice(String.valueOf(newPrice));
+                finalViewHolder.editTxtQuantity.setText(HomeFragment.arrayCart.get(position).getQuantity() + "");
+                finalViewHolder.txtCartItemPrice.setText(HomeFragment.arrayCart.get(position).getPrice() + "đ");
                 CartFragment.totalCart();
             }
         });
@@ -109,13 +110,13 @@ public class CartAdapter extends BaseAdapter {
                     if (quantity > 1) {
                         quantityNew = Integer.parseInt(finalViewHolder.editTxtQuantity.getText().toString()) - 1;
                     }
-                    int quantityCurrent = CartFragment.arrayCart.get(position).getQuantity();
-                    String price = CartFragment.arrayCart.get(position).getPrice();
-                    CartFragment.arrayCart.get(position).setQuantity(quantityNew);
+                    int quantityCurrent = HomeFragment.arrayCart.get(position).getQuantity();
+                    String price = HomeFragment.arrayCart.get(position).getPrice();
+                    HomeFragment.arrayCart.get(position).setQuantity(quantityNew);
                     Long newPrice = (Long.parseLong(price) * quantityNew) / quantityCurrent;
-                    CartFragment.arrayCart.get(position).setPrice(String.valueOf(newPrice));
-                    finalViewHolder.editTxtQuantity.setText(CartFragment.arrayCart.get(position).getQuantity() + "");
-                    finalViewHolder.txtCartItemPrice.setText(CartFragment.arrayCart.get(position).getPrice() + "đ");
+                    HomeFragment.arrayCart.get(position).setPrice(String.valueOf(newPrice));
+                    finalViewHolder.editTxtQuantity.setText(HomeFragment.arrayCart.get(position).getQuantity() + "");
+                    finalViewHolder.txtCartItemPrice.setText(HomeFragment.arrayCart.get(position).getPrice() + "đ");
                     CartFragment.totalCart();
                 }
             }
@@ -129,10 +130,10 @@ public class CartAdapter extends BaseAdapter {
                 builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position) {
-                        CartFragment.arrayCart.remove(position);
+                        HomeFragment.arrayCart.remove(position);
                         notifyDataSetChanged();
                         CartFragment.totalCart();
-                        if (CartFragment.arrayCart.size() == 0) {
+                        if (HomeFragment.arrayCart.size() == 0) {
                             CartFragment.txtNoted.setVisibility(View.VISIBLE);
                             CartFragment.listCart.setVisibility(View.INVISIBLE);
                             CartFragment.imgNoted.setVisibility(View.VISIBLE);

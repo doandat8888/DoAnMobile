@@ -1,6 +1,7 @@
 package com.example.doanmobile.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.example.doanmobile.R;
 import com.example.doanmobile.adapter.CategoryListAdapter;
 import com.example.doanmobile.adapter.ProductListAdapter;
 import com.example.doanmobile.customLayoutManager.SpanningLinearLayoutManager;
+import com.example.doanmobile.model.Cart;
 import com.example.doanmobile.model.Category;
 import com.example.doanmobile.model.Product;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +51,7 @@ public class HomeFragment extends Fragment{
     Context context;
 
     ArrayList<Product> productList = new ArrayList<>();
+    public static ArrayList<Cart> arrayCart = new ArrayList<Cart>();
 
     public HomeFragment() {
         // Required empty public constructor
