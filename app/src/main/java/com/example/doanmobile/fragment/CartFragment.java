@@ -1,219 +1,160 @@
 package com.example.doanmobile.fragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.doanmobile.R;
-import com.example.doanmobile.adapter.CartAdapter;
-import com.example.doanmobile.model.Cart;
-import com.example.doanmobile.model.Product;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.example.doanmobile.adapter.CartListAdapter;
+import com.example.doanmobile.interfaceData.CartTotalListener;
+import com.example.doanmobile.model.ProductCart;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class CartFragment extends Fragment {
-    public static ListView listCart;
-    static TextView txtCartSubTotal, txtCartTotal;
-    public static TextView txtNoted;
-    Button btnCharge, btnContinue;
-    CartAdapter cartAdapter;
-    ImageButton btnDelItem;
-    public static ImageView imgNoted;
-    public static long total = 0;
+public class CartFragment extends Fragment implements CartTotalListener {
 
-    public CartFragment() {
-        // Required empty public constructor
-    }
 
-    public static CartFragment newInstance(String fullName, Context context) {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+
+    public CartFragment() {}
+
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment CartFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static CartFragment newInstance(String param1, String param2) {
         CartFragment fragment = new CartFragment();
         Bundle args = new Bundle();
-        args.putString("name", fullName);
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
 
+
+    private GridView gridViewCart;
+    private TextView txtQuantity,txtTotal;
+    private ArrayList<ProductCart> cartProducts ;
+
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+
+
     }
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //muốn viết theo kiểu này nhưng bị lỗi :((
-        //cartAdapter = new CartAdapter(CartFragment.this, HomeFragment.arrayCart);
-        cartAdapter = new CartAdapter(CartFragment.this.getContext(), HomeFragment.arrayCart);
-        View view = inflater.inflate(R.layout.fragment_cart, container, false);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        listCart = view.findViewById(R.id.listCart);
-        txtCartSubTotal = view.findViewById(R.id.txtCartSubTotal);
-        txtNoted = view.findViewById(R.id.txtNoted);
-        txtCartTotal = view.findViewById(R.id.txtCartTotal);
-        btnCharge = view.findViewById(R.id.btnCharge);
-        btnContinue = view.findViewById(R.id.btnContinue);
-        btnDelItem = view.findViewById(R.id.btnDelItem);
-        imgNoted = view.findViewById(R.id.imgNoted);
 
-        //User - online
+        gridViewCart = getView().findViewById(R.id.gridViewCart);
+        txtQuantity = getView().findViewById(R.id.editTxtQuantity);
 
-        //Keep buying
-        btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //muốn viết theo kiểu này nhưng bị lỗi :((
-                //Intent homeAct = new Intent(CartFragment.this, HomeFragment.class);
-                Intent homeAct = new Intent(CartFragment.this.getContext(), HomeFragment.class);
-                startActivity(homeAct);
-            }
-        });
 
-        //Checkout
-        btnCharge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (HomeFragment.arrayCart.isEmpty()) {
-                    Toast.makeText(getContext().getApplicationContext(), "Giỏ hàng của bạn trống!", Toast.LENGTH_SHORT).show();
-                } else {
-                    //muốn viết theo kiểu này nhưng bị lỗi :((
-                    //AlertDialog.Builder builder = new AlertDialog.Builder(CartFragment.this);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CartFragment.this.getContext());
-                    builder.setTitle("Xác nhận đặt hàng");
-                    builder.setMessage("Bạn có chắc muốn đặt đơn hàng này?");
-                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int position) {
-                            //Order History
-                        }
-                    });
-                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+        txtTotal = getView().findViewById(R.id.txt_total_cart);
+        CartListAdapter adapter = new CartListAdapter(getCartProducts(), getActivity().getApplicationContext());
+        adapter.setCartTotalListener(this);
+        gridViewCart.setAdapter(adapter);
 
-                        }
-                    });
-                    builder.show();
-                }
-            }
-        });
 
-        //Muốn viết theo kiểu này nhưng bị lỗi
-        //cartAdapter = new CartAdapter(CartFragment.this, HomeFragment.arrayCart);
-        cartAdapter = new CartAdapter(CartFragment.this.getContext(), HomeFragment.arrayCart);
-        listCart.setAdapter(cartAdapter);
-        checkEmptyCart();
-        totalCart();
-
-        return view;
     }
 
-    //Tính tổng giá trị giỏ hàng
-    public static void totalCart() {
-        total = 0;
-        for (int i = 0; i < HomeFragment.arrayCart.size(); i++) {
-            total += Long.parseLong(HomeFragment.arrayCart.get(i).getPrice());
-        }
-        String totalCart = total + " đ";
-        txtCartSubTotal.setText(totalCart);
-        txtCartTotal.setText((total + 0) + " đ");
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_cart, container, false);
     }
-    //Kiểm tra giỏ hàng rỗng
-    private void checkEmptyCart() {
-        if (HomeFragment.arrayCart.isEmpty()) {
-            cartAdapter.notifyDataSetChanged();
-            txtNoted.setVisibility(View.VISIBLE);
-            imgNoted.setVisibility(View.VISIBLE);
-            listCart.setVisibility(View.INVISIBLE);
-        } else {
-            cartAdapter.notifyDataSetChanged();
-            txtNoted.setVisibility(View.INVISIBLE);
-            imgNoted.setVisibility(View.INVISIBLE);
-            listCart.setVisibility(View.VISIBLE);
+
+
+
+
+    public ArrayList<ProductCart> getCartProducts() {
+        // Lấy dữ liệu từ Shared Preferences
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
+        String cartJson = sharedPreferences.getString("cart", "");
+
+
+        // Chuyển đổi từ JSON sang danh sách đối tượng ProductCart
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<ProductCart>>() {
+        }.getType();
+        cartProducts = gson.fromJson(cartJson, type);
+
+
+        // Kiểm tra nếu danh sách chưa tồn tại, khởi tạo danh sách mới
+        if (cartProducts == null) {
+            cartProducts = new ArrayList<>();
         }
-    }
-    //Add to cart
-    public static void AddToCart(String receiveIdPro, int quantity) {
-        //Tìm id của sp => truy vấn rồi add vào giỏ hàng
-        if (HomeFragment.arrayCart.size() > 0) { //Nếu chưa tồn tại item thì thêm vào giỏ, ngược lại thì chỉ thêm số lượng
-            boolean flag = false; //Biến KT item tồn tại
-            for (int i = 0; i < HomeFragment.arrayCart.size(); i++) {
-                if (HomeFragment.arrayCart.get(i).getId().equals(receiveIdPro)) {
-                    int oldQuantity = HomeFragment.arrayCart.get(i).getQuantity();
-                    String oldPrice = HomeFragment.arrayCart.get(i).getPrice();
-                    HomeFragment.arrayCart.get(i).setQuantity(HomeFragment.arrayCart.get(i).getQuantity() + quantity);
-                    HomeFragment.arrayCart.get(i).setPrice(((HomeFragment.arrayCart.get(i).getQuantity()
-                            * Long.parseLong(oldPrice)) / oldQuantity) + "");
-                    flag = true;
-                    break;
+
+
+        // Kiểm tra và xóa các sản phẩm đã hết hạn
+        if (cartProducts != null && !cartProducts.isEmpty()) {
+            long currentTimeMillis = System.currentTimeMillis();
+            Iterator<ProductCart> iterator = cartProducts.iterator();
+            while (iterator.hasNext()) {
+                ProductCart productCart = iterator.next();
+                if (productCart.getExpiryTimeMillis() <= currentTimeMillis) {
+                    iterator.remove();
+                } else if (!productCart.isStatus()) {
+                    iterator.remove();
                 }
             }
-            if (flag == false) {
-                FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference dRef = fDatabase.getReference("Products");
-                Query query = dRef.orderByChild("proId").equalTo(receiveIdPro);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot listPro : snapshot.getChildren()) {
-                            Product product = listPro.getValue(Product.class);
-                            Cart item = new Cart(String.valueOf(product.getId()),
-                                    product.getImg(),
-                                    product.getName(),
-                                    Long.parseLong(String.valueOf(product.getPrice())) * quantity + "",
-                                    quantity);
-                            HomeFragment.arrayCart.add(item);
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
-            }
-        } else {
-            FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
-            DatabaseReference dRef = fDatabase.getReference("Products");
-            Query query = dRef.orderByChild("proId").equalTo(receiveIdPro);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot listPro : snapshot.getChildren()) {
-                        Product product = listPro.getValue(Product.class);
-                        Cart item = new Cart(String.valueOf(product.getId()),
-                                product.getImg(),
-                                product.getName(),
-                                Long.parseLong(String.valueOf(product.getPrice())) * quantity + "",
-                                quantity);
-                        HomeFragment.arrayCart.add(item);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            // Lưu lại danh sách sản phẩm sau khi xóa vào Shared Preferences
+            String updatedCartJson = gson.toJson(cartProducts);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("cart", updatedCartJson);
+            editor.apply();
         }
 
+
+        return cartProducts;
+    }
+
+
+    @Override
+    public void onCartTotalChanged(int total) {
+        DecimalFormat myFormatter = new DecimalFormat("###,###");
+        txtTotal.setText(myFormatter.format(total));
     }
 }
