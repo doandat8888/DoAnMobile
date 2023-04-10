@@ -21,7 +21,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartListAdapter extends BaseAdapter {
-    private ArrayList<ProductCart> productCartList;
+    private static ArrayList<ProductCart> productCartList;
     private Context context;
     private CartTotalListener cartTotalListener;
 
@@ -98,8 +98,6 @@ public class CartListAdapter extends BaseAdapter {
 
 
 
-
-
         //
         dataItem.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,8 +129,6 @@ public class CartListAdapter extends BaseAdapter {
 
             }
         });
-
-
 
 
         return convertView;
@@ -190,8 +186,5 @@ public class CartListAdapter extends BaseAdapter {
         public Button btnMinus, btnPlus;
         public ImageButton btnDelItem;
         public EditText editTxtQuantity;
-
-
     }
-
 }

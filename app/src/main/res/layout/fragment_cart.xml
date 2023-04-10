@@ -31,11 +31,15 @@
                 android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="GIỎ HÀNG"
-                android:textSize="15sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="left"
+                android:text="MY CART"
+                android:textSize="25dp"
                 android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                android:textColor="#276B4A"/>
 
 
         </LinearLayout>
@@ -77,13 +81,14 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@color/white"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
 
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65"
+                android:layout_weight="0.5"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -92,10 +97,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Tổng thanh toán:"
-                    android:textSize="13sp"
+                    android:text="Total:"
+                    android:textSize="25dp"
                     tools:ignore="HardcodedText" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:paddingStart="3dp"
+                    android:paddingVertical="3dp"
+                    android:text="$"
+                    android:textSize="25dp"
+                    tools:ignore="HardcodedText,RtlSymmetry,SmallSp" />
 
                 <TextView
                     android:id="@+id/txt_total_cart"
@@ -103,8 +117,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingStart="5dp"
-                    android:text="0 ₫"
-                    android:textSize="14sp"
+                    android:text="0"
+                    android:textSize="25dp"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText,RtlSymmetry" />
 
@@ -125,15 +139,15 @@
                     android:layout_height="match_parent">
 
 
-                    <TextView
+                    <Button
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="80dp"
                         android:layout_gravity="center_vertical"
-                        android:text="Mua hàng"
+                        android:text="Check Out"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:backgroundTint="#276B4A"
                         tools:ignore="HardcodedText,RtlCompat" />
                 </LinearLayout>
             </LinearLayout>
