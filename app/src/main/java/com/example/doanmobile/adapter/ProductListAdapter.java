@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doanmobile.R;
 import com.example.doanmobile.ViewDetailProductActivity;
+import com.example.doanmobile.fragment.CartFragment;
 import com.example.doanmobile.model.Product;
 import com.squareup.picasso.Picasso;
 
@@ -48,6 +49,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.name.setText(product.getName());
         Picasso.get().load(product.getImg()).resize(300, 300).centerCrop().into(holder.img);
         holder.price.setText("$" + product.getPrice());
+        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent viewCartAct = new Intent(context, CartFragment.class);
+                //context.startActivity(viewCartAct);
+                Toast.makeText(context, "Đã thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +78,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView name;
-        public ImageView img;
+        public ImageView img, btnAdd;
         public TextView price;
         public RelativeLayout productList;
 
@@ -79,6 +88,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             img = itemView.findViewById(R.id.imageViewSrc);
             price = itemView.findViewById(R.id.productPrice);
             productList = itemView.findViewById(R.id.productListView);
+            btnAdd = itemView.findViewById(R.id.addBtn);
         }
     }
 }

@@ -109,8 +109,7 @@ public class CartListAdapter extends BaseAdapter {
                 for(int i = 0;i<productCartList.size();i++) {
                     productCartList.get(i).setQuantity(String.valueOf(newQuantity));
                 }
-
-
+                total(productCartList);
             }
         });
 
@@ -125,8 +124,7 @@ public class CartListAdapter extends BaseAdapter {
                 for(int i = 0;i<productCartList.size();i++) {
                     productCartList.get(i).setQuantity(String.valueOf(newQuantity));
                 }
-
-
+                total(productCartList);
             }
         });
 

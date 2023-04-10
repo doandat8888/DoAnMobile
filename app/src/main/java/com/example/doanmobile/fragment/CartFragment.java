@@ -157,4 +157,9 @@ public class CartFragment extends Fragment implements CartTotalListener {
         DecimalFormat myFormatter = new DecimalFormat("###,###");
         txtTotal.setText(myFormatter.format(total));
     }
+    //Tính tổng tiền
+    public void calcTotalAmount(double price, int quantity) {
+        double totalMoney = price * quantity;
+        txtTotal.setText("$ " + totalMoney);
+    }
 }
