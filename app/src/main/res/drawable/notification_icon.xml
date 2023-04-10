@@ -1,0 +1,7 @@
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="21dp"
+    android:viewportWidth="20"
+    android:viewportHeight="21"
+    android:src="@drawable/bellicon">
+</bitmap>
