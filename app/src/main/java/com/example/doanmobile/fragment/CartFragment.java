@@ -69,6 +69,7 @@ public class CartFragment extends Fragment implements CartTotalListener {
     private TextView txtQuantity,txtTotal;
     private Button btnCheckOut;
     private ArrayList<ProductCart> cartProducts ;
+    private  CartTotalListener cartTotalListener;
 
 
 
@@ -113,13 +114,16 @@ public class CartFragment extends Fragment implements CartTotalListener {
             @Override
             public void onClick(View v) {
                 //Check out activity
-                Toast.makeText(getContext(), "for checkout!", Toast.LENGTH_SHORT).show();
+                if (cartProducts != null && !cartProducts.isEmpty()) {
+                    Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "your cart is empty!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
     }
-
-
 
 
     public ArrayList<ProductCart> getCartProducts() {
@@ -171,10 +175,5 @@ public class CartFragment extends Fragment implements CartTotalListener {
     public void onCartTotalChanged(int total) {
         DecimalFormat myFormatter = new DecimalFormat("###,###");
         txtTotal.setText(myFormatter.format(total));
-    }
-    //Tính tổng tiền
-    public void calcTotalAmount(double price, int quantity) {
-        double totalMoney = price * quantity;
-        txtTotal.setText("$ " + totalMoney);
     }
 }

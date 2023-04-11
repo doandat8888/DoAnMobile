@@ -59,8 +59,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viewCartAct = new Intent(context, CartFragment.class);
-                context.startActivity(viewCartAct);
+                //Tạo đối tượng productCart
+                ProductCart productCart = new ProductCart(String.valueOf(product.getId()), product.getName(), String.valueOf(product.getPrice()), "1", product.getImg(), System.currentTimeMillis() + (15 * 60 * 1000), true);
+                //Lưu đối tượng productCart vào SharedPreferences
+                addToCart(productCart);
                 Toast.makeText(context, "Đã thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -97,5 +99,28 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             productList = itemView.findViewById(R.id.productListView);
             btnAdd = itemView.findViewById(R.id.addBtn);
         }
+    }
+    private void addToCart(ProductCart product) {
+        // Lấy dữ liệu từ SharedPreferences
+        SharedPreferences sharedPreferences = context.getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
+        // Lấy giá trị dạng JSON từ SharedPreferences
+        String cartJson = sharedPreferences.getString("cart", "");
+        List<ProductCart> cartList = new ArrayList<>();
+
+        // Chuyển đổi dữ liệu JSON thành danh sách sản phẩm
+        if (!TextUtils.isEmpty(cartJson)) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<ProductCart>>() {}.getType();
+            cartList = gson.fromJson(cartJson, type);
+        }
+        // Thêm sản phẩm mới vào danh sách
+        cartList.add(product);
+        // Chuyển danh sách sản phẩm thành chuỗi JSON
+        Gson gson = new Gson();
+        String newCartJson = gson.toJson(cartList);
+        // Lưu danh sách sản phẩm mới vào SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("cart", newCartJson);
+        editor.apply();
     }
 }
