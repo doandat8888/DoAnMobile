@@ -130,23 +130,32 @@ public class ViewDetailProductActivity extends AppCompatActivity {
         String cartJson = sharedPreferences.getString("cart", "");
         List<ProductCart> cartList = new ArrayList<>();
 
-
         // Chuyển đổi dữ liệu JSON thành danh sách sản phẩm
         if (!TextUtils.isEmpty(cartJson)) {
             Gson gson = new Gson();
-            Type type = new TypeToken<List<ProductCart>>() {}.getType();
+            Type type = new TypeToken<List<ProductCart>>() {
+            }.getType();
             cartList = gson.fromJson(cartJson, type);
         }
 
+        boolean isProductExistInCart = false;
+        for (ProductCart item : cartList) {
+            if (item.getId().equals(product.getId())) {
+                int quantity = Integer.parseInt(item.getQuantity()) + Integer.parseInt(product.getQuantity());
+                item.setQuantity(String.valueOf(quantity));
+                isProductExistInCart = true;
+                break;
+            }
+        }
 
-        // Thêm sản phẩm mới vào danh sách
+        if (!isProductExistInCart) {
+            // Thêm sản phẩm mới vào danh sách
             cartList.add(product);
-
+        }
 
         // Chuyển danh sách sản phẩm thành chuỗi JSON
         Gson gson = new Gson();
         String newCartJson = gson.toJson(cartList);
-
 
         // Lưu danh sách sản phẩm mới vào SharedPreferences
         SharedPreferences.Editor editor = sharedPreferences.edit();

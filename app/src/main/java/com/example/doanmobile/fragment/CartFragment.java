@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +101,6 @@ public class CartFragment extends Fragment implements CartTotalListener {
         adapter.setCartTotalListener(this);
         gridViewCart.setAdapter(adapter);
 
-
     }
 
 
@@ -113,13 +113,11 @@ public class CartFragment extends Fragment implements CartTotalListener {
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Check out activity
-                if (cartProducts != null && !cartProducts.isEmpty()) {
-                    Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getContext(), "your cart is empty!", Toast.LENGTH_SHORT).show();
-                }
+                double cartTotal = getCartTotal();
+                Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
+                intent.putExtra("cartTotal", cartTotal);
+                startActivity(intent);
+
             }
         });
         return view;
@@ -175,5 +173,13 @@ public class CartFragment extends Fragment implements CartTotalListener {
     public void onCartTotalChanged(int total) {
         DecimalFormat myFormatter = new DecimalFormat("###,###");
         txtTotal.setText(myFormatter.format(total));
+    }
+
+    public double getCartTotal() {
+        double totalPrice = 0;
+        for (ProductCart productCart : cartProducts) {
+            totalPrice += Double.parseDouble(productCart.getPrice()) * Double.parseDouble(productCart.getQuantity());
+        }
+        return totalPrice;
     }
 }

@@ -28,6 +28,9 @@ public class ConfirmOrderActivity extends AppCompatActivity implements CartTotal
         txtTotalCart = findViewById(R.id.txt_total_cart);
         btnReturnHome = findViewById(R.id.btnReturnHome);
 
+        Integer cartTotal = getIntent().getIntExtra("cartTotal", 0);
+        onCartTotalChanged(Integer.valueOf(cartTotal));
+
         btnReturnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -113,11 +113,26 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             Type type = new TypeToken<List<ProductCart>>() {}.getType();
             cartList = gson.fromJson(cartJson, type);
         }
-        // Thêm sản phẩm mới vào danh sách
-        cartList.add(product);
+
+        boolean isProductExistInCart = false;
+        for (ProductCart item : cartList) {
+            if (item.getId().equals(product.getId())) {
+                int quantity = Integer.parseInt(item.getQuantity()) + Integer.parseInt(product.getQuantity());
+                item.setQuantity(String.valueOf(quantity));
+                isProductExistInCart = true;
+                break;
+            }
+        }
+
+        if (!isProductExistInCart) {
+            // Thêm sản phẩm mới vào danh sách
+            cartList.add(product);
+        }
+
         // Chuyển danh sách sản phẩm thành chuỗi JSON
         Gson gson = new Gson();
         String newCartJson = gson.toJson(cartList);
+
         // Lưu danh sách sản phẩm mới vào SharedPreferences
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("cart", newCartJson);
