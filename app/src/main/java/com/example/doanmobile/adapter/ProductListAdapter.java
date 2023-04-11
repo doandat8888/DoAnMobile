@@ -2,8 +2,10 @@ package com.example.doanmobile.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.text.Layout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,14 @@ import com.example.doanmobile.R;
 import com.example.doanmobile.ViewDetailProductActivity;
 import com.example.doanmobile.fragment.CartFragment;
 import com.example.doanmobile.model.Product;
+import com.example.doanmobile.model.ProductCart;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ViewHolder> {
 
@@ -52,8 +59,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent viewCartAct = new Intent(context, CartFragment.class);
-                //context.startActivity(viewCartAct);
+                Intent viewCartAct = new Intent(context, CartFragment.class);
+                context.startActivity(viewCartAct);
                 Toast.makeText(context, "Đã thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
             }
         });

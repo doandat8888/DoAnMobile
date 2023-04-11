@@ -2,8 +2,6 @@ package com.example.doanmobile;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.doanmobile.fragment.HomeFragment;
 import com.example.doanmobile.model.Account;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
         signUp = findViewById(R.id.txtSignup);
         btnLogin = findViewById(R.id.btnLogin);
-        username = findViewById(R.id.editTextUsername);
+        username = findViewById(R.id.editTextPhone);
         password = findViewById(R.id.editTextPassword);
 
         signUp.setOnClickListener(new View.OnClickListener() {

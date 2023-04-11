@@ -55,7 +55,7 @@
             />
 
         <TextView
-            android:id="@+id/txtSubSignup"
+            android:id="@+id/txtConfirmTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -74,7 +74,7 @@
             android:layout_marginStart="-101dp"
             android:layout_marginLeft="3dp"
             android:layout_marginBottom="154dp"
-            android:layout_toEndOf="@+id/txtSubSignup"
+            android:layout_toEndOf="@+id/txtConfirmTitle"
             android:text="Sign up for the best exprerience"
             android:textColor="#FFFFFF"
             android:textSize="18dp" />
@@ -95,7 +95,7 @@
         app:layout_constraintVertical_bias="0.92">
 
         <EditText
-            android:id="@+id/editTextUsername"
+            android:id="@+id/editTextPhone"
             android:layout_width="309dp"
             android:layout_height="64dp"
             android:ems="10"
@@ -109,7 +109,7 @@
             app:layout_constraintVertical_bias="0.291" />
 
         <EditText
-            android:id="@+id/editTextImg"
+            android:id="@+id/editTextAddress"
             android:layout_width="309dp"
             android:layout_height="64dp"
             android:ems="10"
@@ -151,7 +151,7 @@
             app:layout_constraintVertical_bias="0.472" />
 
         <Button
-            android:id="@+id/btnSignup"
+            android:id="@+id/btnConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#F3D060"

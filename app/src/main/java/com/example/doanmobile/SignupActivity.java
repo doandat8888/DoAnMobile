@@ -15,13 +15,8 @@ import android.widget.Toast;
 import com.example.doanmobile.model.Account;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.Random;
 
 public class SignupActivity extends AppCompatActivity {
     TextView signIn;
@@ -34,11 +29,11 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         fullName = findViewById(R.id.editTextName);
-        username = findViewById(R.id.editTextUsername);
+        username = findViewById(R.id.editTextPhone);
         password = findViewById(R.id.editTextPassword);
-        avatarImg = findViewById(R.id.editTextImg);
+        avatarImg = findViewById(R.id.editTextAddress);
         phoneNumber = findViewById(R.id.editTextPhoneNumber);
-        signUp = findViewById(R.id.btnSignup);
+        signUp = findViewById(R.id.btnConfirm);
 
         signIn = findViewById(R.id.txtSignin);
         signIn.setOnClickListener(new View.OnClickListener() {

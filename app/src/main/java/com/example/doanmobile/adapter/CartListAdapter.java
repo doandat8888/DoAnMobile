@@ -1,6 +1,7 @@
 package com.example.doanmobile.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.example.doanmobile.R;
 import com.example.doanmobile.interfaceData.CartTotalListener;
 import com.example.doanmobile.model.ProductCart;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -84,19 +86,34 @@ public class CartListAdapter extends BaseAdapter {
 
 
 
-
-
         //Xóa hàng khỏi giỏ hàng
         dataItem.btnDelItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String productId = productCartList.get(position).getId() ;
-                updateProductCartStatus(productId, false);
-                Toast.makeText(context, productId, Toast.LENGTH_SHORT).show();
+//                String productId = productCartList.get(position).getId() ;
+//                updateProductCartStatus(productId, false);
+//                Toast.makeText(context, productId, Toast.LENGTH_SHORT).show();
+
+                // Lấy vị trí sản phẩm cần xóa
+                int position = (Integer) v.getTag();
+
+                // Xóa sản phẩm khỏi productCartList
+                productCartList.remove(position);
+
+                // Cập nhật lại productCartList
+                updateSharedPreferences(productCartList);
+                notifyDataSetChanged();
+
+                // Thông báo xóa thành công
+                Toast.makeText(context, "Product removed from cart", Toast.LENGTH_SHORT).show();
+
+                // Cập nhật lại tổng tiền
+                total(productCartList);
             }
         });
-
-
+        dataItem.btnDelItem.setTag(position);
+        updateSharedPreferences(productCartList);
+        notifyDataSetChanged();
 
         //
         dataItem.btnPlus.setOnClickListener(new View.OnClickListener() {
@@ -135,26 +152,26 @@ public class CartListAdapter extends BaseAdapter {
 
 
 
-    public void updateProductCartStatus(String id, boolean status) {
-        for (ProductCart productCart : productCartList) {
-            if (productCart.getId() == id) {
-                productCart.setStatus(status);
-                notifyDataSetChanged();
-                break;
-            }
-        }
-    }
+//    public void updateProductCartStatus(String id, boolean status) {
+//        for (ProductCart productCart : productCartList) {
+//            if (productCart.getId() == id) {
+//                productCart.setStatus(status);
+//                notifyDataSetChanged();
+//                break;
+//            }
+//        }
+//    }
 
 
-    public boolean removeProductCart(int position) {
-        if (position >= 0 && position < productCartList.size()) {
-            productCartList.get(position).setStatus(false);
-            notifyDataSetChanged();
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean removeProductCart(int position) {
+//        if (position >= 0 && position < productCartList.size()) {
+//            productCartList.get(position).setStatus(false);
+//            notifyDataSetChanged();
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
 
     public void total(ArrayList<ProductCart> productCartList ) {
@@ -184,5 +201,19 @@ public class CartListAdapter extends BaseAdapter {
         public Button btnMinus, btnPlus;
         public ImageButton btnDelItem;
         public EditText editTxtQuantity;
+    }
+
+    private void updateSharedPreferences(ArrayList<ProductCart> productCartList) {
+        // Lấy danh sách sản phẩm trong giỏ hàng từ SharedPreferences
+        SharedPreferences sharedPreferences = context.getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
+
+        // Chuyển danh sách sản phẩm trong giỏ hàng thành chuỗi JSON
+        Gson gson = new Gson();
+        String json = gson.toJson(productCartList);
+
+        // Lưu danh sách sản phẩm mới vào SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("productCartList", json);
+        editor.apply();
     }
 }

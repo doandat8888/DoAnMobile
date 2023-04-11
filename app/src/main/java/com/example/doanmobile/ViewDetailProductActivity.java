@@ -119,8 +119,6 @@ public class ViewDetailProductActivity extends AppCompatActivity {
 
 
                 }
-
-
             }
         });
     };
@@ -142,7 +140,7 @@ public class ViewDetailProductActivity extends AppCompatActivity {
 
 
         // Thêm sản phẩm mới vào danh sách
-        cartList.add(product);
+            cartList.add(product);
 
 
         // Chuyển danh sách sản phẩm thành chuỗi JSON

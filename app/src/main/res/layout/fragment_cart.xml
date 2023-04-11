@@ -140,6 +140,7 @@
 
 
                     <Button
+                        android:id="@+id/btnCheckOut"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:layout_gravity="center_vertical"

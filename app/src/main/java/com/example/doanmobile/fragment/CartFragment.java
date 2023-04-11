@@ -1,17 +1,22 @@
 package com.example.doanmobile.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.doanmobile.History.ConfirmOrderActivity;
+import com.example.doanmobile.LoginActivity;
 import com.example.doanmobile.R;
 import com.example.doanmobile.adapter.CartListAdapter;
 import com.example.doanmobile.interfaceData.CartTotalListener;
@@ -62,6 +67,7 @@ public class CartFragment extends Fragment implements CartTotalListener {
 
     private GridView gridViewCart;
     private TextView txtQuantity,txtTotal;
+    private Button btnCheckOut;
     private ArrayList<ProductCart> cartProducts ;
 
 
@@ -86,9 +92,9 @@ public class CartFragment extends Fragment implements CartTotalListener {
 
         gridViewCart = getView().findViewById(R.id.gridViewCart);
         txtQuantity = getView().findViewById(R.id.editTxtQuantity);
-
-
         txtTotal = getView().findViewById(R.id.txt_total_cart);
+
+
         CartListAdapter adapter = new CartListAdapter(getCartProducts(), getActivity().getApplicationContext());
         adapter.setCartTotalListener(this);
         gridViewCart.setAdapter(adapter);
@@ -101,7 +107,16 @@ public class CartFragment extends Fragment implements CartTotalListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
+        btnCheckOut = view.findViewById(R.id.btnCheckOut);
+        btnCheckOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Check out activity
+                Toast.makeText(getContext(), "for checkout!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return view;
     }
 
 
