@@ -22,7 +22,7 @@
             android:text="NOTIFICATIONS"
             android:textAlignment="center"
             android:textColor="#276B4A"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textStyle="bold"
             android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"

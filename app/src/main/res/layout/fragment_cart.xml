@@ -35,7 +35,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-                android:gravity="left"
+                android:gravity="center"
                 android:text="MY CART"
                 android:textColor="#276B4A"
                 android:textSize="25dp"
