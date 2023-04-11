@@ -37,7 +37,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        MyNotification myNotification = mNotification.get(i);
+        final MyNotification myNotification = mNotification.get(i);
         viewHolder.image.setImageResource(myNotification.getImageResource());
         viewHolder.notice.setText(myNotification.getNotice());
         viewHolder.content.setText(myNotification.getContent());
@@ -51,7 +51,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView image;
-        public TextView notice, content, title;
+        public TextView notice, content;
 
         public ViewHolder(@NonNull View itemView)
         {

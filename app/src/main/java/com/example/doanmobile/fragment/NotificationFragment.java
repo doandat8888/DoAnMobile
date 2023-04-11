@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.doanmobile.R;
 import com.example.doanmobile.adapter.NotificationAdapter;
@@ -22,8 +24,9 @@ public class NotificationFragment extends Fragment {
 
     private RecyclerView recyclerView;
     //private NotificationAdapter notificationAdapter;
-    final static ArrayList<MyNotification> mNotification = new ArrayList<MyNotification>();
+    final ArrayList<MyNotification> mNotification = new ArrayList<MyNotification>();
 
+    TextView txtView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -35,9 +38,11 @@ public class NotificationFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerViewNotif);
         NotificationAdapter notificationAdapter = new NotificationAdapter(mNotification, getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(notificationAdapter);
 
+
+        Log.d("Size", String.valueOf(mNotification.size()));
         return view;
     }
 }
