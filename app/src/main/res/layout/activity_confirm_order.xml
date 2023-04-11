@@ -29,7 +29,7 @@
             app:srcCompat="@drawable/arrowleft" />
 
         <TextView
-            android:id="@+id/txtConfirmTitle"
+            android:id="@+id/txtSubSignup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -48,7 +48,7 @@
             android:layout_marginStart="-130dp"
             android:layout_marginLeft="3dp"
             android:layout_marginBottom="152dp"
-            android:layout_toEndOf="@+id/txtConfirmTitle"
+            android:layout_toEndOf="@+id/txtSubSignup"
             android:text="informantion shipment"
             android:textColor="#FFFFFF"
             android:textSize="18dp" />
@@ -70,7 +70,7 @@
         app:layout_constraintVertical_bias="0.69">
 
         <EditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id/editTextUsername"
             android:layout_width="309dp"
             android:layout_height="64dp"
             android:ems="10"
@@ -98,7 +98,7 @@
             app:layout_constraintVertical_bias="0.569" />
 
         <Button
-            android:id="@+id/btnConfirm"
+            android:id="@+id/btnSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#F3D060"

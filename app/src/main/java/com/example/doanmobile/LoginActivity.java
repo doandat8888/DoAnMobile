@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 public class LoginActivity extends AppCompatActivity {
     TextView signUp;
     Intent intent;
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
         signUp = findViewById(R.id.txtSignup);
         btnLogin = findViewById(R.id.btnLogin);
-        username = findViewById(R.id.editTextPhone);
+        username = findViewById(R.id.editTextUsername);
         password = findViewById(R.id.editTextPassword);
 
         signUp.setOnClickListener(new View.OnClickListener() {

@@ -3,14 +3,12 @@ package com.example.doanmobile.History;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.doanmobile.LoginActivity;
 import com.example.doanmobile.R;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
@@ -26,10 +24,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm_order);
 
         editTextName = findViewById(R.id.editTextName);
-        editTextPhone = findViewById(R.id.editTextPhone);
+        editTextPhone = findViewById(R.id.editTextUsername);
         editTextAddress = findViewById(R.id.editTextAddress);
 
-        btnConfirm = findViewById(R.id.btnConfirm);
+        btnConfirm = findViewById(R.id.btnSignup);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

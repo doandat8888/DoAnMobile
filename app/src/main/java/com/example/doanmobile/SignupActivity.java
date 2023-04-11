@@ -29,11 +29,11 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         fullName = findViewById(R.id.editTextName);
-        username = findViewById(R.id.editTextPhone);
+        username = findViewById(R.id.editTextUsername);
         password = findViewById(R.id.editTextPassword);
-        avatarImg = findViewById(R.id.editTextAddress);
+        avatarImg = findViewById(R.id.editTextImg);
         phoneNumber = findViewById(R.id.editTextPhoneNumber);
-        signUp = findViewById(R.id.btnConfirm);
+        signUp = findViewById(R.id.btnSignup);
 
         signIn = findViewById(R.id.txtSignin);
         signIn.setOnClickListener(new View.OnClickListener() {
