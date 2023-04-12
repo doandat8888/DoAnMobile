@@ -100,7 +100,7 @@
             android:layout_height="64dp"
             android:ems="10"
 
-            android:text="Username"
+            android:hint="Username"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.514"
@@ -114,7 +114,7 @@
             android:layout_height="64dp"
             android:ems="10"
 
-            android:text="Avatar link"
+            android:hint="Avatar link"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.441"
@@ -128,7 +128,7 @@
             android:layout_height="64dp"
             android:ems="10"
 
-            android:text="Phone number"
+            android:hint="Phone number"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.441"
@@ -142,7 +142,7 @@
             android:layout_height="64dp"
             android:ems="10"
             android:inputType="textPassword"
-            android:text="Password"
+            android:hint="Password"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.485"
@@ -168,7 +168,7 @@
             android:layout_height="64dp"
             android:ems="10"
 
-            android:text="Full name"
+            android:hint="Fullname"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.686"
