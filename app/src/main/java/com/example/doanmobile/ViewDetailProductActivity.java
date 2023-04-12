@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doanmobile.model.ProductCart;
+import com.example.doanmobile.model.ProductLiked;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -31,7 +32,7 @@ public class ViewDetailProductActivity extends AppCompatActivity {
     String imgUrl="";
     String pname;
     Integer pprice;
-    ImageButton heart_icon_inactive, heart_icon_active;
+    ImageView heart_icon_inactive, heart_icon_active;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,18 @@ public class ViewDetailProductActivity extends AppCompatActivity {
         heart_icon_inactive.setOnClickListener(v -> {
             heart_icon_inactive.setVisibility(View.INVISIBLE);
             heart_icon_active.setVisibility(View.VISIBLE);
+
+            ProductLiked liked = new ProductLiked(productId, pname, String.valueOf(pprice), imgUrl, true);
+            addToLikedView(liked);
         });
+
+        //Check xem sản phẩm có được like không
+        /*List<String> likedID = getCurrentLikedProductsID();
+
+        if (likedID.contains(productId)){
+            heart_icon_active.setVisibility(View.VISIBLE);
+            heart_icon_inactive.setVisibility(View.INVISIBLE);
+        }*/
 
         btnDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,12 +142,8 @@ public class ViewDetailProductActivity extends AppCompatActivity {
                 if (productCart != null) {
                     addToCart(productCart);
                     Toast.makeText(ViewDetailProductActivity.this, "Add cart success", Toast.LENGTH_SHORT).show();
-
-
                 } else {
                     Toast.makeText(ViewDetailProductActivity.this, "Add cart fail", Toast.LENGTH_SHORT).show();
-
-
                 }
             }
         });
@@ -181,4 +189,53 @@ public class ViewDetailProductActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    private List<String> getCurrentLikedProductsID(){
+        SharedPreferences sharedPreferences = getSharedPreferences("LikedPrefs", Context.MODE_PRIVATE);
+        // Lấy giá trị dạng JSON từ SharedPreferences
+        String likedJson = sharedPreferences.getString("liked", "");
+        List<ProductLiked> likedList = new ArrayList<>();
+        List<String> likedID = new ArrayList<>();
+
+        // Chuyển đổi dữ liệu JSON thành danh sách sản phẩm
+        if (!TextUtils.isEmpty(likedJson)) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<ProductLiked>>() {}.getType();
+            likedList = gson.fromJson(likedJson, type);
+        }
+
+        for (int i = 0; i < likedList.size(); i++){
+            String id = likedList.get(i).getId();
+            likedID.add(id);
+        }
+
+        return likedID;
+    }
+
+    //Liked Fragment
+    public void addToLikedView(ProductLiked product) {
+        // Lấy danh sách favorite từ SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("LikedPrefs", Context.MODE_PRIVATE);
+        // Lấy giá trị dạng JSON từ SharedPreferences
+        String likedJson = sharedPreferences.getString("liked", "");
+        List<ProductLiked> likedList = new ArrayList<>();
+
+        // Chuyển đổi dữ liệu JSON thành danh sách sản phẩm
+        if (!TextUtils.isEmpty(likedJson)) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<ProductLiked>>() {}.getType();
+            likedList = gson.fromJson(likedJson, type);
+        }
+
+        // Thêm sản phẩm mới vào danh sách
+        likedList.add(product);
+
+        // Chuyển danh sách sản phẩm thành chuỗi JSON
+        Gson gson = new Gson();
+        String newCartJson = gson.toJson(likedList);
+
+        // Lưu danh sách sản phẩm mới vào SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("liked", newCartJson);
+        editor.apply();
+    }
 }
