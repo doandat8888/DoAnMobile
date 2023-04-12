@@ -167,8 +167,6 @@ public class CartFragment extends Fragment implements CartTotalListener {
 
         return cartProducts;
     }
-
-
     @Override
     public void onCartTotalChanged(int total) {
         DecimalFormat myFormatter = new DecimalFormat("###,###");
@@ -181,5 +179,11 @@ public class CartFragment extends Fragment implements CartTotalListener {
             totalPrice += Double.parseDouble(productCart.getPrice()) * Double.parseDouble(productCart.getQuantity());
         }
         return totalPrice;
+    }
+    private void clearCart() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("cart", "");
+        editor.apply();
     }
 }

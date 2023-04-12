@@ -1,6 +1,7 @@
 package com.example.doanmobile.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doanmobile.R;
+import com.example.doanmobile.ViewDetailProductActivity;
 import com.example.doanmobile.interfaceData.CartTotalListener;
 import com.example.doanmobile.model.ProductCart;
 import com.google.gson.Gson;
@@ -28,6 +30,7 @@ public class CartListAdapter extends BaseAdapter {
     private CartTotalListener cartTotalListener;
 
 
+    public CartListAdapter() {}
 
     public CartListAdapter(ArrayList<ProductCart> productCartList, Context context) {
         this.productCartList = productCartList;
@@ -108,9 +111,7 @@ public class CartListAdapter extends BaseAdapter {
                 int currentPirce = price;
                 int newQuantity = currentQuantity + 1;
                 dataItem.editTxtQuantity.setText(myFormatter.format(newQuantity));
-                for(int i = 0;i<productCartList.size();i++) {
-                    productCartList.get(i).setQuantity(String.valueOf(newQuantity));
-                }
+                productCartList.get(position).setQuantity(String.valueOf(newQuantity));
                 total(productCartList);
                 updateCartData();
             }
@@ -124,9 +125,7 @@ public class CartListAdapter extends BaseAdapter {
                 int currentPirce = price;
                 int newQuantity = currentQuantity - 1;
                 dataItem.editTxtQuantity.setText(myFormatter.format(newQuantity));
-                for(int i = 0;i<productCartList.size();i++) {
-                    productCartList.get(i).setQuantity(String.valueOf(newQuantity));
-                }
+                productCartList.get(position).setQuantity(String.valueOf(newQuantity));
                 total(productCartList);
                 updateCartData();
             }
@@ -135,11 +134,6 @@ public class CartListAdapter extends BaseAdapter {
 
         return convertView;
     }
-
-
-
-
-
 
     public void total(ArrayList<ProductCart> productCartList ) {
         int total = 0;
@@ -173,14 +167,14 @@ public class CartListAdapter extends BaseAdapter {
     public boolean removeProductCart(int position) {
         if (productCartList != null && position >= 0 && position < productCartList.size()) {
             productCartList.remove(position);
-
-            // Save the updated cartProducts list back to shared preferences
+            // Save the shared preferences
             updateCartData();
             return true;
         } else {
             return false;
         }
     }
+
     public void updateCartData(){
         // Save the updated cartProducts list back to shared preferences
         SharedPreferences sharedPreferences = context.getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
