@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class ViewDetailProductActivity extends AppCompatActivity {
     String imgUrl;
     String pname;
     Integer pprice;
+    ImageButton heart_icon_inactive, heart_icon_active;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,22 @@ public class ViewDetailProductActivity extends AppCompatActivity {
                 double price = intent.getIntExtra("price", 0);
                 calcTotalAmount(price, productQuantity);
             }
+        });
+
+        //Heart icon
+        heart_icon_inactive = findViewById(R.id.heart_icon_inactive);
+        heart_icon_active = findViewById(R.id.heart_icon_active);
+
+        heart_icon_active.setVisibility(View.INVISIBLE);
+
+        heart_icon_active.setOnClickListener(v -> {
+            heart_icon_active.setVisibility(View.INVISIBLE);
+            heart_icon_inactive.setVisibility(View.VISIBLE);
+        });
+
+        heart_icon_inactive.setOnClickListener(v -> {
+            heart_icon_inactive.setVisibility(View.INVISIBLE);
+            heart_icon_active.setVisibility(View.VISIBLE);
         });
 
         btnDecrease.setOnClickListener(new View.OnClickListener() {
