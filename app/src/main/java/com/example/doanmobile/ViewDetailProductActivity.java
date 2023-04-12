@@ -1,6 +1,5 @@
 package com.example.doanmobile;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doanmobile.model.ProductCart;
 import com.google.gson.Gson;
@@ -26,8 +27,8 @@ public class ViewDetailProductActivity extends AppCompatActivity {
     ImageView productImg;
     TextView productName, productPrice, productDescription, total, quantity;
     Button btnRaise, btnDecrease, btnAddToCart;
-    String productId = "";
-    String imgUrl="";
+    String productId;
+    String imgUrl;
     String pname;
     Integer pprice;
 
@@ -51,13 +52,13 @@ public class ViewDetailProductActivity extends AppCompatActivity {
         productDescription.setText(intent.getStringExtra("description"));
         pprice = intent.getIntExtra("price", 0);
         productPrice.setText("$ " + pprice);
-        productId = getIntent().getStringExtra("productId");
+
+        productId = getIntent().getStringExtra("id");
 
         btnRaise = findViewById(R.id.btnRaise);
         btnDecrease = findViewById(R.id.btnDecrease);
         quantity = findViewById(R.id.txtQuantity);
         btnAddToCart = findViewById(R.id.btnAddToCart);
-
         //CART
         addToCartView();
 
@@ -108,7 +109,8 @@ public class ViewDetailProductActivity extends AppCompatActivity {
                 long currentTimeMillis = System.currentTimeMillis();
                 // Tính thời gian hết hạn (5 phút sau thời điểm hiện tại)
                 long expiryTimeMillis = currentTimeMillis + (15 * 60 * 1000);
-                ProductCart productCart = new ProductCart(productId,pname,String.valueOf(pprice),quantity.getText().toString(),imgUrl,expiryTimeMillis,true);
+                ProductCart productCart = new ProductCart(productId,pname,String.valueOf(pprice),
+                        quantity.getText().toString(),imgUrl,expiryTimeMillis,true);
                 if (productCart != null) {
                     addToCart(productCart);
                     Toast.makeText(ViewDetailProductActivity.this, "Add cart success", Toast.LENGTH_SHORT).show();
@@ -130,6 +132,7 @@ public class ViewDetailProductActivity extends AppCompatActivity {
         String cartJson = sharedPreferences.getString("cart", "");
         List<ProductCart> cartList = new ArrayList<>();
 
+
         // Chuyển đổi dữ liệu JSON thành danh sách sản phẩm
         if (!TextUtils.isEmpty(cartJson)) {
             Gson gson = new Gson();
@@ -137,6 +140,8 @@ public class ViewDetailProductActivity extends AppCompatActivity {
             }.getType();
             cartList = gson.fromJson(cartJson, type);
         }
+
+
 
         boolean isProductExistInCart = false;
         for (ProductCart item : cartList) {
@@ -148,14 +153,17 @@ public class ViewDetailProductActivity extends AppCompatActivity {
             }
         }
 
+
         if (!isProductExistInCart) {
             // Thêm sản phẩm mới vào danh sách
             cartList.add(product);
         }
 
+
         // Chuyển danh sách sản phẩm thành chuỗi JSON
         Gson gson = new Gson();
         String newCartJson = gson.toJson(cartList);
+
 
         // Lưu danh sách sản phẩm mới vào SharedPreferences
         SharedPreferences.Editor editor = sharedPreferences.edit();
