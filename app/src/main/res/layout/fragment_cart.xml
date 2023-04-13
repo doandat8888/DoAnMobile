@@ -151,7 +151,7 @@
                         android:text="Check Out"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="15dp"
+                        android:textSize="16dp"
                         android:backgroundTint="#276B4A"
                         tools:ignore="HardcodedText,RtlCompat" />
                 </LinearLayout>

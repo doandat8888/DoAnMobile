@@ -2,4 +2,11 @@
     <string name="app_name">DoAnMobile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="payment_methods">
+        <item>Thanh toán khi nhận hàng</item>
+        <item>Ví Momo</item>
+        <item>Zalo Pay</item>
+        <item>Thẻ tín dụng</item>
+        <item>Thẻ ghi nợ</item>
+    </string-array>
 </resources>

@@ -55,7 +55,6 @@ public class ViewDetailProductActivity extends AppCompatActivity {
         productDescription.setText(intent.getStringExtra("description"));
         pprice = intent.getIntExtra("price", 0);
         productPrice.setText("$ " + pprice);
-
         productId = getIntent().getStringExtra("id");
 
         btnRaise = findViewById(R.id.btnRaise);

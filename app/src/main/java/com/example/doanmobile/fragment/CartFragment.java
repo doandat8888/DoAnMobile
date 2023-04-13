@@ -14,8 +14,12 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.doanmobile.CheckoutActivity;
 import com.example.doanmobile.History.ConfirmOrderActivity;
 import com.example.doanmobile.LoginActivity;
 import com.example.doanmobile.R;
@@ -114,7 +118,8 @@ public class CartFragment extends Fragment implements CartTotalListener {
             @Override
             public void onClick(View v) {
                 double cartTotal = getCartTotal();
-                Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
+
+                Intent intent = new Intent(getActivity(), CheckoutActivity.class);
                 intent.putExtra("cartTotal", cartTotal);
                 startActivity(intent);
 

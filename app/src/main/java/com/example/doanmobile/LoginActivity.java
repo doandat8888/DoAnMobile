@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,11 +23,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     TextView signUp;
-    Intent intent;
+    Intent intent, forCheckout;
     Button btnLogin;
     EditText username;
     EditText password;
     Context context;
+    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,15 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("img", accountLogin.getImg());
                             intent.putExtra("phoneNumber", accountLogin.getPhoneNumber());
                             intent.putExtra("key", snap.getKey());
+
+                            sp = getSharedPreferences("UserInfoPref", getApplicationContext().MODE_PRIVATE);
+                            SharedPreferences.Editor spedit = sp.edit();
+                            spedit.putString("name", accountLogin.getName());
+                            spedit.putString("username", accountLogin.getUsername());
+                            spedit.putString("phoneNumber", accountLogin.getPhoneNumber());
+                            spedit.clear();
+                            spedit.apply();
+
                             startActivity(intent);
                             success = true;
                             break;
