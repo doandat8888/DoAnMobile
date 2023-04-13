@@ -101,6 +101,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             btnAdd = itemView.findViewById(R.id.addBtn);
         }
     }
+
+
+    //CART - thêm sản phẩm vào giỏ hàng
     private void addToCart(ProductCart product) {
         // Lấy dữ liệu từ SharedPreferences
         SharedPreferences sharedPreferences = context.getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
