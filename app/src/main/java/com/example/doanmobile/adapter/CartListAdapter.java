@@ -123,6 +123,10 @@ public class CartListAdapter extends BaseAdapter {
                 int newQuantity = currentQuantity - 1;
                 dataItem.editTxtQuantity.setText(myFormatter.format(newQuantity));
                 productCartList.get(position).setQuantity(String.valueOf(newQuantity));
+
+                if(newQuantity == 0){
+                    removeProductCart(position);
+                }
                 total(productCartList);
                 updateCartData();
             }
