@@ -14,12 +14,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.doanmobile.CheckoutActivity;
 import com.example.doanmobile.History.ConfirmOrderActivity;
 import com.example.doanmobile.LoginActivity;
 import com.example.doanmobile.R;
@@ -74,7 +70,8 @@ public class CartFragment extends Fragment implements CartTotalListener {
     private TextView txtQuantity,txtTotal;
     private Button btnCheckOut;
     private ArrayList<ProductCart> cartProducts ;
-    private  CartTotalListener cartTotalListener;
+    private CartListAdapter adapter;
+    private String totalOrder;
 
 
 
@@ -90,50 +87,36 @@ public class CartFragment extends Fragment implements CartTotalListener {
 
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
         gridViewCart = getView().findViewById(R.id.gridViewCart);
         txtQuantity = getView().findViewById(R.id.editTxtQuantity);
+        btnCheckOut = getView().findViewById(R.id.btnCheckOut);
         txtTotal = getView().findViewById(R.id.txt_total_cart);
-
 
         CartListAdapter adapter = new CartListAdapter(getCartProducts(), getActivity().getApplicationContext());
         adapter.setCartTotalListener(this);
         gridViewCart.setAdapter(adapter);
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_cart, container, false);
-        btnCheckOut = view.findViewById(R.id.btnCheckOut);
-        btnCheckOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double cartTotal = getCartTotal();
-
-                Intent intent = new Intent(getActivity(), CheckoutActivity.class);
-                intent.putExtra("cartTotal", cartTotal);
-                startActivity(intent);
-
-            }
-        });
-        return view;
+        return inflater.inflate(R.layout.fragment_cart, container, false);
     }
 
 
+
+
+
+    //Danh sách cart products
     public ArrayList<ProductCart> getCartProducts() {
         // Lấy dữ liệu từ Shared Preferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
         String cartJson = sharedPreferences.getString("cart", "");
-
 
         // Chuyển đổi từ JSON sang danh sách đối tượng ProductCart
         Gson gson = new Gson();
@@ -141,12 +124,10 @@ public class CartFragment extends Fragment implements CartTotalListener {
         }.getType();
         cartProducts = gson.fromJson(cartJson, type);
 
-
         // Kiểm tra nếu danh sách chưa tồn tại, khởi tạo danh sách mới
         if (cartProducts == null) {
             cartProducts = new ArrayList<>();
         }
-
 
         // Kiểm tra và xóa các sản phẩm đã hết hạn
         if (cartProducts != null && !cartProducts.isEmpty()) {
@@ -169,26 +150,40 @@ public class CartFragment extends Fragment implements CartTotalListener {
             editor.apply();
         }
 
-
         return cartProducts;
     }
+
+    //Click check out button
+    private void confirmYourOrder() {
+        btnCheckOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cartProducts != null && cartProducts.size() > 0) {
+                    // Lấy ra tổng tiền của giỏ hàng
+                    int total = adapter.total(cartProducts);
+                    // Chuyển sang ConfirmOrderActivity
+                    Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
+                    intent.putExtra("total", total);
+                    startActivity(intent);
+                    // Xóa giỏ hàng hiện tại
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.apply();
+                    // Refresh the view
+                    adapter.clearCart();
+                    adapter.notifyDataSetChanged();
+                    txtTotal.setText("0");
+                } else {
+                    Toast.makeText(getActivity(), "Chưa có sản phẩm trong giỏ hàng.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     @Override
     public void onCartTotalChanged(int total) {
         DecimalFormat myFormatter = new DecimalFormat("###,###");
         txtTotal.setText(myFormatter.format(total));
-    }
-
-    public double getCartTotal() {
-        double totalPrice = 0;
-        for (ProductCart productCart : cartProducts) {
-            totalPrice += Double.parseDouble(productCart.getPrice()) * Double.parseDouble(productCart.getQuantity());
-        }
-        return totalPrice;
-    }
-    private void clearCart() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("cart", "");
-        editor.apply();
     }
 }

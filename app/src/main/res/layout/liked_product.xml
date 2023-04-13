@@ -97,7 +97,8 @@
                 android:paddingVertical="10dp"
                 android:paddingStart="10dp"
                 android:padding="30dp"
-                android:src="@drawable/ic_red_heart"/>
+                android:src="@drawable/ic_red_heart"
+                android:backgroundTint="@color/white"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

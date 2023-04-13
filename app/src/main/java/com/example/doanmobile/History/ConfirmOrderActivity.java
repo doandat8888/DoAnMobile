@@ -2,22 +2,17 @@ package com.example.doanmobile.History;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.doanmobile.R;
-import com.example.doanmobile.interfaceData.CartTotalListener;
-import com.example.doanmobile.model.ProductCart;
+import com.example.doanmobile.fragment.HomeFragment;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 
-public class ConfirmOrderActivity extends AppCompatActivity implements CartTotalListener{
+public class ConfirmOrderActivity extends AppCompatActivity{
     TextView  txtTotalCart;
     Button btnReturnHome;
 
@@ -25,23 +20,18 @@ public class ConfirmOrderActivity extends AppCompatActivity implements CartTotal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
+        btnReturnHome = (Button) findViewById(R.id.btnReturnHome);
         txtTotalCart = findViewById(R.id.txt_total_cart);
-        btnReturnHome = findViewById(R.id.btnReturnHome);
 
-        Integer cartTotal = getIntent().getIntExtra("cartTotal", 0);
-        onCartTotalChanged(Integer.valueOf(cartTotal));
-
+        Intent intent = getIntent();
+        String total = intent.getStringExtra("total");
+        txtTotalCart.setText(total);
         btnReturnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Return Home
-                finish();
+                Intent intent = new Intent(ConfirmOrderActivity.this, HomeFragment.class);
+                startActivity(intent);
             }
         });
-    }
-
-    public void onCartTotalChanged(int total) {
-        DecimalFormat myFormatter = new DecimalFormat("###,###");
-        txtTotalCart.setText(myFormatter.format(total));
     }
 }

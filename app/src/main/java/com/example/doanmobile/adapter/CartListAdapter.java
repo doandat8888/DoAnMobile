@@ -1,7 +1,6 @@
 package com.example.doanmobile.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doanmobile.R;
-import com.example.doanmobile.ViewDetailProductActivity;
 import com.example.doanmobile.interfaceData.CartTotalListener;
 import com.example.doanmobile.model.ProductCart;
 import com.google.gson.Gson;
@@ -89,7 +87,7 @@ public class CartListAdapter extends BaseAdapter {
 
 
 
-        //Xóa hàng khỏi giỏ hàng
+        //Xóa sản phẩm khỏi giỏ hàng
         dataItem.btnDelItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +101,7 @@ public class CartListAdapter extends BaseAdapter {
             }
         });
 
-        //
+        //Tăng, giảm số lượng
         dataItem.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +115,6 @@ public class CartListAdapter extends BaseAdapter {
             }
         });
 
-
         dataItem.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,23 +123,27 @@ public class CartListAdapter extends BaseAdapter {
                 int newQuantity = currentQuantity - 1;
                 dataItem.editTxtQuantity.setText(myFormatter.format(newQuantity));
                 productCartList.get(position).setQuantity(String.valueOf(newQuantity));
+
+                if(newQuantity == 0){
+                    removeProductCart(position);
+                }
                 total(productCartList);
                 updateCartData();
             }
         });
 
-
         return convertView;
     }
 
-    public void total(ArrayList<ProductCart> productCartList ) {
+    //Tính tổng tiền của giỏ hàng
+    public int total(ArrayList<ProductCart> productCartList ) {
         int total = 0;
         for (int i = 0;i<productCartList.size();i++) {
             total += Integer.parseInt(productCartList.get(i).getPrice()) * Integer.parseInt(productCartList.get(i).getQuantity());
         }
         cartTotalListener.onCartTotalChanged(total);
+        return total;
     }
-
 
     public String myFormat(int number, int mode) {
         DecimalFormat myFormatter = new DecimalFormat("###,###");
@@ -155,7 +156,6 @@ public class CartListAdapter extends BaseAdapter {
         return "";
     }
 
-
     private static class MyView {
         public TextView txtCartItemName, txtCartItemPrice;
         public ImageView imgItemCart;
@@ -164,10 +164,10 @@ public class CartListAdapter extends BaseAdapter {
         public EditText editTxtQuantity;
     }
 
+    //Xóa sản phẩm khỏi giỏ hàng
     public boolean removeProductCart(int position) {
         if (productCartList != null && position >= 0 && position < productCartList.size()) {
             productCartList.remove(position);
-            // Save the shared preferences
             updateCartData();
             return true;
         } else {
@@ -175,8 +175,8 @@ public class CartListAdapter extends BaseAdapter {
         }
     }
 
+    //Cập nhật giỏ hàng
     public void updateCartData(){
-        // Save the updated cartProducts list back to shared preferences
         SharedPreferences sharedPreferences = context.getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String updatedCartJson = gson.toJson(productCartList);
@@ -184,5 +184,10 @@ public class CartListAdapter extends BaseAdapter {
         editor.putString("cart", updatedCartJson);
         editor.apply();
         notifyDataSetChanged();
+    }
+
+    //Rỗng giỏ hàng
+    public void clearCart() {
+        productCartList.clear();
     }
 }

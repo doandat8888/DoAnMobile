@@ -63,7 +63,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 ProductCart productCart = new ProductCart(String.valueOf(product.getId()), product.getName(), String.valueOf(product.getPrice()), "1", product.getImg(), System.currentTimeMillis() + (15 * 60 * 1000), true);
                 //Lưu đối tượng productCart vào SharedPreferences
                 addToCart(productCart);
-                Toast.makeText(context, "Đã thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Add cart success!", Toast.LENGTH_SHORT).show();
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +101,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             btnAdd = itemView.findViewById(R.id.addBtn);
         }
     }
+
+
+    //CART - thêm sản phẩm vào giỏ hàng
     private void addToCart(ProductCart product) {
         // Lấy dữ liệu từ SharedPreferences
         SharedPreferences sharedPreferences = context.getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
@@ -125,8 +128,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             }
         }
 
+        // Thêm sản phẩm mới vào danh sách
         if (!isProductExistInCart) {
-            // Thêm sản phẩm mới vào danh sách
             cartList.add(product);
         }
 
