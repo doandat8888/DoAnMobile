@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                     if(success == false) {
-                        System.out.println("Sai thong tin dang nhap");
+                        Toast.makeText(LoginActivity.this, "User does not exist in this system. Please try again!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }else {
-            Toast.makeText(context,"Vui long nhap du thong tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Missing user information. Please try again!", Toast.LENGTH_SHORT).show();
         }
     }
 }

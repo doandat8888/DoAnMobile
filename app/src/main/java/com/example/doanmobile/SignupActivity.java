@@ -64,16 +64,16 @@ public class SignupActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        System.out.println("Dang ki tai khoan thanh cong");
+                        Toast.makeText(SignupActivity.this, "Sign up successfully!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        System.out.println("Co loi xay ra");
+                        Toast.makeText(SignupActivity.this, "Error!", Toast.LENGTH_SHORT).show();
                     }
                 });
         }else {
-            Toast.makeText(context,"Vui long nhap du thong tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignupActivity.this, "Missing user info", Toast.LENGTH_SHORT).show();
         }
     }
 }
