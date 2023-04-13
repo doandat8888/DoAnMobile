@@ -166,8 +166,6 @@ public class ViewDetailProductActivity extends AppCompatActivity {
             cartList = gson.fromJson(cartJson, type);
         }
 
-
-
         boolean isProductExistInCart = false;
         for (ProductCart item : cartList) {
             if (item.getId().equals(product.getId())) {

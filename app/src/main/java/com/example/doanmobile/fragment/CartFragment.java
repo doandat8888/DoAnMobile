@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.doanmobile.History.ConfirmOrderActivity;
-import com.example.doanmobile.LoginActivity;
+import com.example.doanmobile.CheckoutActivity;
 import com.example.doanmobile.R;
 import com.example.doanmobile.adapter.CartListAdapter;
 import com.example.doanmobile.interfaceData.CartTotalListener;
@@ -94,11 +92,25 @@ public class CartFragment extends Fragment implements CartTotalListener {
         gridViewCart = getView().findViewById(R.id.gridViewCart);
         txtQuantity = getView().findViewById(R.id.editTxtQuantity);
         btnCheckOut = getView().findViewById(R.id.btnCheckOut);
+
         txtTotal = getView().findViewById(R.id.txt_total_cart);
 
         CartListAdapter adapter = new CartListAdapter(getCartProducts(), getActivity().getApplicationContext());
         adapter.setCartTotalListener(this);
         gridViewCart.setAdapter(adapter);
+
+        btnCheckOut.setOnClickListener(v -> {
+            if (cartProducts != null && cartProducts.size() > 0) {
+                // Lấy ra tổng tiền của giỏ hàng
+                int total = adapter.total(cartProducts);
+                // Chuyển sang ConfirmOrderActivity
+                Intent intent = new Intent(getActivity(), CheckoutActivity.class);
+                intent.putExtra("total", total);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getActivity(), "Chưa có sản phẩm trong giỏ hàng.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -107,10 +119,6 @@ public class CartFragment extends Fragment implements CartTotalListener {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cart, container, false);
     }
-
-
-
-
 
     //Danh sách cart products
     public ArrayList<ProductCart> getCartProducts() {
@@ -154,32 +162,7 @@ public class CartFragment extends Fragment implements CartTotalListener {
     }
 
     //Click check out button
-    private void confirmYourOrder() {
-        btnCheckOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cartProducts != null && cartProducts.size() > 0) {
-                    // Lấy ra tổng tiền của giỏ hàng
-                    int total = adapter.total(cartProducts);
-                    // Chuyển sang ConfirmOrderActivity
-                    Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
-                    intent.putExtra("total", total);
-                    startActivity(intent);
-                    // Xóa giỏ hàng hiện tại
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.clear();
-                    editor.apply();
-                    // Refresh the view
-                    adapter.clearCart();
-                    adapter.notifyDataSetChanged();
-                    txtTotal.setText("0");
-                } else {
-                    Toast.makeText(getActivity(), "Chưa có sản phẩm trong giỏ hàng.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+
 
     @Override
     public void onCartTotalChanged(int total) {

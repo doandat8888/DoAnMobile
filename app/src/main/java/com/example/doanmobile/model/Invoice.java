@@ -8,9 +8,9 @@ public class Invoice {
     private String recipientName;
     private String shipToAddress;
     private String paymentMethod;
-    private double invoiceTotal;
+    private int invoiceTotal;
 
-    public Invoice(int invoiceId, String accountName, String accountUsername, String accountPhoneNumber, String recipientName, String shipToAddress, String paymentMethod, double invoiceTotal) {
+    public Invoice(int invoiceId, String accountName, String accountUsername, String accountPhoneNumber, String recipientName, String shipToAddress, String paymentMethod, int invoiceTotal) {
         this.invoiceId = invoiceId;
         this.accountName = accountName;
         this.accountUsername = accountUsername;
@@ -81,7 +81,7 @@ public class Invoice {
         return invoiceTotal;
     }
 
-    public void setInvoiceTotal(double invoiceTotal) {
+    public void setInvoiceTotal(int invoiceTotal) {
         this.invoiceTotal = invoiceTotal;
     }
 }

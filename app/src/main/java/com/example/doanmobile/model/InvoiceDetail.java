@@ -6,9 +6,9 @@ public class InvoiceDetail {
     private int productQuantity;
     private int unitPrice;
     private int productTotal;
-    private double invoiceTotal;
+    private int invoiceTotal;
 
-    public InvoiceDetail(int invoiceId, String productName, int productQuantity, int unitPrice, int productTotal, double invoiceTotal) {
+    public InvoiceDetail(int invoiceId, String productName, int productQuantity, int unitPrice, int productTotal, int invoiceTotal) {
         this.invoiceId = invoiceId;
         this.productName = productName;
         this.productQuantity = productQuantity;
@@ -57,7 +57,7 @@ public class InvoiceDetail {
         this.productTotal = productTotal;
     }
 
-    public double getInvoiceTotal() {
+    public int getInvoiceTotal() {
         return invoiceTotal;
     }
 
