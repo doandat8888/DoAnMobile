@@ -46,30 +46,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.533" />
 
-    <ImageButton
-        android:id="@+id/heart_icon_inactive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_white_heart"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddToCart"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toEndOf="@+id/txtTotal"
-        app:layout_constraintTop_toBottomOf="@+id/detailProductImg"
-        app:layout_constraintVertical_bias="0.96" />
-
-    <ImageButton
-        android:id="@+id/heart_icon_active"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_red_heart"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddToCart"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toEndOf="@+id/txtTotal"
-        app:layout_constraintTop_toBottomOf="@+id/detailProductImg"
-        app:layout_constraintVertical_bias="0.96"/>
-
     <Button
         android:id="@+id/btnAddToCart"
         android:layout_width="167dp"
@@ -109,7 +85,7 @@
         app:layout_constraintHorizontal_bias="0.135"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.965" />
+        app:layout_constraintVertical_bias="0.97" />
 
     <Button
         android:id="@+id/btnDecrease"
@@ -176,7 +152,7 @@
         app:layout_constraintVertical_bias="0.404" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/heart_icon_inactive"
         android:layout_width="19dp"
         android:layout_height="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -186,5 +162,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.403"
         app:srcCompat="@drawable/heartunfilled" />
+
+    <ImageView
+        android:id="@+id/heart_icon_active"
+        android:layout_width="19dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.895"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.403"
+        app:srcCompat="@drawable/heartfilled" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
