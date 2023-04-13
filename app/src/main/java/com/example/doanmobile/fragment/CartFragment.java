@@ -99,8 +99,6 @@ public class CartFragment extends Fragment implements CartTotalListener {
         CartListAdapter adapter = new CartListAdapter(getCartProducts(), getActivity().getApplicationContext());
         adapter.setCartTotalListener(this);
         gridViewCart.setAdapter(adapter);
-
-        confirmYourOrder();
     }
 
     @Override
