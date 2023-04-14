@@ -5,19 +5,13 @@ public class Invoice {
     private String accountName;
     private String accountUsername;
     private String accountPhoneNumber;
-    private String recipientName;
-    private String shipToAddress;
-    private String paymentMethod;
     private int invoiceTotal;
 
-    public Invoice(int invoiceId, String accountName, String accountUsername, String accountPhoneNumber, String recipientName, String shipToAddress, String paymentMethod, int invoiceTotal) {
+    public Invoice(int invoiceId, String accountName, String accountUsername, String accountPhoneNumber, int invoiceTotal) {
         this.invoiceId = invoiceId;
         this.accountName = accountName;
         this.accountUsername = accountUsername;
         this.accountPhoneNumber = accountPhoneNumber;
-        this.recipientName = recipientName;
-        this.shipToAddress = shipToAddress;
-        this.paymentMethod = paymentMethod;
         this.invoiceTotal = invoiceTotal;
     }
 
@@ -53,31 +47,7 @@ public class Invoice {
         this.accountPhoneNumber = accountPhoneNumber;
     }
 
-    public String getRecipientName() {
-        return recipientName;
-    }
-
-    public void setRecipientName(String recipientName) {
-        this.recipientName = recipientName;
-    }
-
-    public String getShipToAddress() {
-        return shipToAddress;
-    }
-
-    public void setShipToAddress(String shipToAddress) {
-        this.shipToAddress = shipToAddress;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public double getInvoiceTotal() {
+    public int getInvoiceTotal() {
         return invoiceTotal;
     }
 

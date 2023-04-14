@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,15 +39,18 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 public class CheckoutActivity extends AppCompatActivity{
     TextView txtTotal;
     GridView gridViewCartInCheckout;
     Button btn_confirm;
-    Spinner spinner_paymentMethod;
-    EditText editText_recipientName, editText_shipToAddress;
+    private static ArrayList<Product> productList = new ArrayList<>();
+    /*Spinner spinner_paymentMethod;
+    EditText editText_recipientName, editText_shipToAddress;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +59,19 @@ public class CheckoutActivity extends AppCompatActivity{
 
         //Array chứa các sản phẩm trong cart
         ArrayList<ProductCart> cartProducts = getCartProducts();
+        getProductList();
+
 
         //Setup
         gridViewCartInCheckout = findViewById(R.id.gridViewCartInCheckout);
         txtTotal = findViewById(R.id.txt_total_cart);
         btn_confirm = findViewById(R.id.btn_confirm);
-        editText_recipientName = findViewById(R.id.editText_recipientName);
+        /*editText_recipientName = findViewById(R.id.editText_recipientName);
         editText_shipToAddress = findViewById(R.id.editText_shipToAddress);
-        spinner_paymentMethod = findViewById(R.id.spinner_paymentMethod);
-        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.payment_methods, R.layout.spinner_item);
+        spinner_paymentMethod = findViewById(R.id.spinner_paymentMethod);*/
+        /*ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.payment_methods, R.layout.spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_paymentMethod.setAdapter(arrayAdapter);
+        spinner_paymentMethod.setAdapter(arrayAdapter);*/
 
         CartInCheckoutAdapter adapter = new CartInCheckoutAdapter(cartProducts, getApplicationContext());
         gridViewCartInCheckout.setAdapter(adapter);
@@ -100,9 +106,9 @@ public class CheckoutActivity extends AppCompatActivity{
             String accountName = sp.getString("name", "");
             String accountUserName = sp.getString("username", "");
             String accountPhoneNumber = sp.getString("phoneNumber", "");
-            String recipientName = editText_recipientName.getText().toString();
+            /*String recipientName = editText_recipientName.getText().toString();
             String shipToAddress = editText_shipToAddress.getText().toString();
-            String paymentMethod = spinner_paymentMethod.getSelectedItem().toString();
+            String paymentMethod = spinner_paymentMethod.getSelectedItem().toString();*/
 
             /*Log.d("recip: ", recipientName);
             Log.d("address: ", shipToAddress);
@@ -111,35 +117,63 @@ public class CheckoutActivity extends AppCompatActivity{
             Log.d("accusername: ", accountUserName);
             Log.d("accphone: ", accountPhoneNumber);*/
 
-            if(recipientName != null && shipToAddress != null && paymentMethod != null && recipientName != "" && shipToAddress != "" && paymentMethod != ""){
-                confirmCheckout(cartProducts,numberOfEntry[0] + 1, accountName, accountUserName, accountPhoneNumber, recipientName,
-                        shipToAddress, paymentMethod, cartTotal);
-                Toast.makeText(getApplicationContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
-            } else{
-                Toast.makeText(getApplicationContext(), "Xin nhập đủ thông tin", Toast.LENGTH_SHORT).show();
-            }
+            confirmCheckout(cartProducts,numberOfEntry[0] + 1, accountName, accountUserName, accountPhoneNumber, cartTotal);
+            Toast.makeText(getApplicationContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
         });
     }
 
-    private void confirmCheckout(ArrayList<ProductCart> cartProducts, int invoiceId, String accountName, String accountUserName, String accountPhoneNumber,
-                                 String recipientName, String shipToAddress, String paymentMethod, int cartTotal) {
+    private void confirmCheckout(ArrayList<ProductCart> cartProducts, int invoiceId, String accountName, String accountUserName, String accountPhoneNumber, int cartTotal) {
 
         DatabaseReference refInvoice = FirebaseDatabase.getInstance().getReference().child("Invoices");
         DatabaseReference refDetail = FirebaseDatabase.getInstance().getReference().child("InvoiceDetails");
         DatabaseReference refProduct = FirebaseDatabase.getInstance().getReference().child("Products");
-        Invoice invoice = new Invoice(invoiceId, accountName, accountUserName, accountPhoneNumber, recipientName, shipToAddress, paymentMethod, cartTotal);
+
+        Invoice invoice = new Invoice(invoiceId, accountName, accountUserName, accountPhoneNumber, cartTotal);
         refInvoice.push().setValue(invoice);
 
-        ArrayList<Product> productList = new ArrayList<>();
-        ArrayList<String> listofkeys = new ArrayList<>();
+        for (ProductCart item : cartProducts){
+            int price = Integer.valueOf(item.getPrice());
+            int quantity = Integer.valueOf(item.getQuantity());
+            InvoiceDetail detail = new InvoiceDetail(invoiceId, item.getName(), quantity, price, price * quantity, cartTotal);
 
-        refProduct.addValueEventListener(new ValueEventListener() {
+            for (Product toBeChanged : productList){
+                if (toBeChanged.getId().equals(item.getId())){
+
+                    /*Product product = new Product(toBeChanged.getId(), toBeChanged.getName(), toBeChanged.getDescription(), toBeChanged.getImg(),
+                            price, toBeChanged.getType(), toBeChanged.getQuantity() - quantity);*/
+                    refProduct.child(toBeChanged.getId()).child("quantity").setValue(toBeChanged.getQuantity() - quantity);
+
+                    /*Map<String, Object> updateValues = product.toMap();
+                    refProduct.child(toBeChanged.getId()).updateChildren(updateValues);*/
+                }
+            }
+
+            refDetail.push().setValue(detail);
+        }
+
+        // Xóa giỏ hàng hiện tại
+        CartListAdapter adapter = new CartListAdapter(getCartProducts(), getApplicationContext());
+        SharedPreferences sharedPreferences = getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        // Refresh the view
+        adapter.clearCart();
+        adapter.notifyDataSetChanged();
+        gridViewCartInCheckout.setAdapter(null);
+        txtTotal.setText("0");
+        finish();
+    }
+
+    public String getBoughtProductKey(DatabaseReference refProduct, String boughtId){
+        final String[] key = {""};
+
+        refProduct.orderByChild("id").equalTo(boughtId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snap : snapshot.getChildren()) {
-                    Product product = snap.getValue(Product.class);
-                    listofkeys.add(snap.getKey());
-                    productList.add(product);
+                    key[0] = snap.getKey();
                 }
             }
 
@@ -149,40 +183,27 @@ public class CheckoutActivity extends AppCompatActivity{
             }
         });
 
-        for (String key : listofkeys){
-            Log.e("key: ", key);
-        }
-
-        for (ProductCart item : cartProducts){
-            int price = Integer.valueOf(item.getPrice());
-            int quantity = Integer.valueOf(item.getQuantity());
-            InvoiceDetail detail = new InvoiceDetail(invoiceId, item.getName(), quantity, price, price * quantity, cartTotal);
-            refDetail.push().setValue(detail);
-
-            for (Product change : productList){
-                if (String.valueOf(change.getId()).equals(item.getId())){
-                    String changeKey = listofkeys.get(productList.indexOf(change));
-                    refProduct.child(changeKey).child("quantity").setValue(change.getQuantity() - quantity);
-                    break;
-                }
-            }
-        }
-
-        // Xóa giỏ hàng hiện tại
-        CartListAdapter adapter = new CartListAdapter(getCartProducts(), getApplicationContext());
-        SharedPreferences sharedPreferences = getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
-        // Refresh the view
-        adapter.clearCart();
-        adapter.notifyDataSetChanged();
-        txtTotal.setText("0");
+        return key[0];
     }
 
-    public void getProductList(DatabaseReference refProduct,ArrayList<Product> productList, ArrayList<String> keyList) {
+    public void getProductList() {
 
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+        databaseReference.child("Products").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap : snapshot.getChildren()) {
+                    Product product = snap.getValue(Product.class);
+                    productList.add(product);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public ArrayList<ProductCart> getCartProducts() {

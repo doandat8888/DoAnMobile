@@ -102,12 +102,12 @@ public class ViewDetailProductActivity extends AppCompatActivity {
         });
 
         //Check xem sản phẩm có được like không
-        /*List<String> likedID = getCurrentLikedProductsID();
+        List<String> likedID = getCurrentLikedProductsID();
 
         if (likedID.contains(productId)){
             heart_icon_active.setVisibility(View.VISIBLE);
             heart_icon_inactive.setVisibility(View.INVISIBLE);
-        }*/
+        }
 
         btnDecrease.setOnClickListener(new View.OnClickListener() {
             @Override

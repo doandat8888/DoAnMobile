@@ -1,8 +1,13 @@
 package com.example.doanmobile.model;
 
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Product {
-    private int id;
+    private String id;
     private String name;
     private String description;
     private String img;
@@ -10,7 +15,7 @@ public class Product {
     private String type;
     private int quantity;
 
-    public Product(int id, String name, String description, String img, int price, String type, int quantity) {
+    public Product(String id, String name, String description, String img, int price, String type, int quantity) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -20,9 +25,24 @@ public class Product {
         this.quantity = quantity;
     }
 
+    @Exclude
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put("id", id);
+        result.put("name", name);
+        result.put("description", description);
+        result.put("img", img);
+        result.put("price", price);
+        result.put("type", type);
+        result.put("quantity", quantity);
+
+        return result;
+    }
+
     public Product() {}
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -50,7 +70,7 @@ public class Product {
         this.price = price;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

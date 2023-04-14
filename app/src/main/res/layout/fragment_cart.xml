@@ -54,7 +54,7 @@
 
     <GridView
         android:id="@+id/gridViewCart"
-        android:layout_width="412dp"
+        android:layout_width="match_parent"
         android:layout_height="636dp"
         android:layout_marginTop="4dp"
         android:gravity="center"
