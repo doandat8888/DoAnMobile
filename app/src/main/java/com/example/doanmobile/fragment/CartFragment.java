@@ -107,8 +107,13 @@ public class CartFragment extends Fragment implements CartTotalListener {
                 Intent intent = new Intent(getActivity(), CheckoutActivity.class);
                 intent.putExtra("total", total);
                 startActivity(intent);
+                // Refresh the view
+                adapter.clearCart();
+                adapter.notifyDataSetChanged();
+                gridViewCart.setAdapter(null);
+                txtTotal.setText("0");
             } else {
-                Toast.makeText(getActivity(), "Chưa có sản phẩm trong giỏ hàng.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Your cart is empty", Toast.LENGTH_SHORT).show();
             }
         });
     }

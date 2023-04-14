@@ -142,9 +142,9 @@ public class ViewDetailProductActivity extends AppCompatActivity {
                         quantity.getText().toString(),imgUrl,expiryTimeMillis,true);
                 if (productCart != null) {
                     addToCart(productCart);
-                    Toast.makeText(ViewDetailProductActivity.this, "Add cart success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewDetailProductActivity.this, "Add to cart success", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(ViewDetailProductActivity.this, "Add cart fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewDetailProductActivity.this, "Add to cart failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });

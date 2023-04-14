@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,7 +57,10 @@ public class LoginActivity extends AppCompatActivity {
     }
     //Đăng nhập
     public void handleLogin(String username, String password) {
-        if(username != "" && password != "") {
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
+        Log.d("username", username);
+        if(!username.equals("") && !password.equals("")) {
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             DatabaseReference databaseReference = firebaseDatabase.getReference();
 

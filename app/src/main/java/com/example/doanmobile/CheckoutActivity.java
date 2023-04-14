@@ -118,7 +118,7 @@ public class CheckoutActivity extends AppCompatActivity{
             Log.d("accphone: ", accountPhoneNumber);*/
 
             confirmCheckout(cartProducts,numberOfEntry[0] + 1, accountName, accountUserName, accountPhoneNumber, cartTotal);
-            Toast.makeText(getApplicationContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Checkout success", Toast.LENGTH_SHORT).show();
         });
     }
 
