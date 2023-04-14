@@ -54,6 +54,9 @@
             android:layout_width="412dp"
             android:layout_height="636dp"
             android:layout_marginTop="4dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center"
             android:horizontalSpacing="10dp"
             android:numColumns="1"
@@ -62,9 +65,7 @@
             android:scrollbars="none"
             android:stretchMode="columnWidth"
             android:verticalSpacing="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/NotiHeader" />
+            app:layout_constraintTop_toBottomOf="@+id/NotiHeader"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
