@@ -125,18 +125,15 @@ public class CartFragment extends Fragment implements CartTotalListener {
         // Lấy dữ liệu từ Shared Preferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
         String cartJson = sharedPreferences.getString("cart", "");
-
         // Chuyển đổi từ JSON sang danh sách đối tượng ProductCart
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<ProductCart>>() {
         }.getType();
         cartProducts = gson.fromJson(cartJson, type);
-
         // Kiểm tra nếu danh sách chưa tồn tại, khởi tạo danh sách mới
         if (cartProducts == null) {
             cartProducts = new ArrayList<>();
         }
-
         // Kiểm tra và xóa các sản phẩm đã hết hạn
         if (cartProducts != null && !cartProducts.isEmpty()) {
             long currentTimeMillis = System.currentTimeMillis();
@@ -149,8 +146,6 @@ public class CartFragment extends Fragment implements CartTotalListener {
                     iterator.remove();
                 }
             }
-
-
             // Lưu lại danh sách sản phẩm sau khi xóa vào Shared Preferences
             String updatedCartJson = gson.toJson(cartProducts);
             SharedPreferences.Editor editor = sharedPreferences.edit();

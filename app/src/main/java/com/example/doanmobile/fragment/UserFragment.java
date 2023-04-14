@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.doanmobile.LoginActivity;
 import com.example.doanmobile.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -89,7 +91,7 @@ public class UserFragment extends Fragment {
         databaseReference.child("Accounts").child(key).child("name").setValue(fullName).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                System.out.println("Cap nhat thong tin thanh cong");
+                Toast.makeText(getContext(), "Update user info successfully", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
