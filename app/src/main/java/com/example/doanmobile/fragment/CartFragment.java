@@ -157,7 +157,6 @@ public class CartFragment extends Fragment implements CartTotalListener {
             editor.putString("cart", updatedCartJson);
             editor.apply();
         }
-
         return cartProducts;
     }
 
