@@ -78,7 +78,6 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     }
                     if(count[0] == 0) {
-                        //databaseReference.child("Accounts").removeValue();
                         databaseReference.child("Accounts").push().setValue(account)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -91,7 +90,7 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "Error!", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                    }else {
+                    }else if(count[0] > 0) {
                         Toast.makeText(SignupActivity.this, "User has existed in the system. Please try again!", Toast.LENGTH_SHORT).show();
                     }
                 }

@@ -136,7 +136,7 @@ public class ViewDetailProductActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Lấy thời gian hiện tại
                 long currentTimeMillis = System.currentTimeMillis();
-                // Tính thời gian hết hạn (5 phút sau thời điểm hiện tại)
+                // Tính thời gian hết hạn (15 phút sau thời điểm hiện tại)
                 long expiryTimeMillis = currentTimeMillis + (15 * 60 * 1000);
                 ProductCart productCart = new ProductCart(productId,pname,String.valueOf(pprice),
                         quantity.getText().toString(),imgUrl,expiryTimeMillis,true);
